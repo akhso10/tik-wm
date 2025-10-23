@@ -412,6 +412,7 @@
             box-shadow: var(--shadow);
             display: flex;
             align-items: center;
+            justify-content: space-between;
             gap: 10px;
             animation: slideUp 0.3s ease;
             border-left: 4px solid var(--primary);
@@ -431,6 +432,210 @@
 
         .notification i {
             font-size: 1.2rem;
+        }
+
+        .notification-close {
+            background: none;
+            border: none;
+            color: var(--gray);
+            cursor: pointer;
+            font-size: 1rem;
+            transition: var(--transition);
+        }
+
+        .notification-close:hover {
+            color: var(--light);
+        }
+
+        /* Language Selector */
+        .language-selector {
+            position: absolute;
+            top: 20px;
+            right: 60px;
+        }
+
+        .language-btn {
+            background: rgba(255, 255, 255, 0.1);
+            border: none;
+            color: var(--light);
+            padding: 8px 15px;
+            border-radius: 20px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: var(--transition);
+        }
+
+        .language-btn:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        .language-dropdown {
+            position: absolute;
+            top: 100%;
+            right: 0;
+            background: var(--dark-light);
+            border-radius: var(--radius);
+            padding: 10px 0;
+            margin-top: 5px;
+            box-shadow: var(--shadow);
+            display: none;
+            z-index: 1000;
+            min-width: 150px;
+        }
+
+        .language-dropdown.active {
+            display: block;
+        }
+
+        .language-option {
+            padding: 10px 15px;
+            cursor: pointer;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .language-option:hover {
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        /* Steps */
+        .steps-container {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 30px;
+            position: relative;
+        }
+
+        .steps-container::before {
+            content: '';
+            position: absolute;
+            top: 20px;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: rgba(255, 255, 255, 0.1);
+            z-index: 1;
+        }
+
+        .step {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            position: relative;
+            z-index: 2;
+        }
+
+        .step-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 10px;
+            transition: var(--transition);
+        }
+
+        .step.active .step-icon {
+            background: var(--primary);
+        }
+
+        .step-text {
+            font-size: 0.8rem;
+            color: var(--gray);
+            text-align: center;
+        }
+
+        .step.active .step-text {
+            color: var(--light);
+        }
+
+        /* Progress Bar */
+        .progress-bar {
+            height: 4px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 2px;
+            margin: 20px 0;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(45deg, var(--primary), var(--secondary));
+            border-radius: 2px;
+            width: 0%;
+            transition: width 0.5s ease;
+        }
+
+        /* History Section */
+        .history-section {
+            background: var(--dark-light);
+            border-radius: var(--radius);
+            padding: 25px;
+            margin-bottom: 30px;
+            box-shadow: var(--shadow);
+            display: none;
+        }
+
+        .history-section.active {
+            display: block;
+        }
+
+        .history-item {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            padding: 15px;
+            border-radius: var(--radius);
+            background: rgba(255, 255, 255, 0.05);
+            margin-bottom: 10px;
+            transition: var(--transition);
+        }
+
+        .history-item:hover {
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .history-thumbnail {
+            width: 60px;
+            height: 60px;
+            border-radius: 8px;
+            object-fit: cover;
+        }
+
+        .history-info {
+            flex: 1;
+        }
+
+        .history-title {
+            font-size: 0.9rem;
+            margin-bottom: 5px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .history-date {
+            font-size: 0.8rem;
+            color: var(--gray);
+        }
+
+        .history-action {
+            background: none;
+            border: none;
+            color: var(--primary);
+            cursor: pointer;
+            font-size: 1.2rem;
+            transition: var(--transition);
+        }
+
+        .history-action:hover {
+            color: var(--secondary);
         }
 
         /* Responsive */
@@ -454,6 +659,16 @@
             .download-options {
                 flex-direction: column;
             }
+            
+            .language-selector {
+                position: static;
+                margin-bottom: 15px;
+            }
+            
+            .language-dropdown {
+                right: auto;
+                left: 0;
+            }
         }
     </style>
 </head>
@@ -463,35 +678,87 @@
         <!-- Header -->
         <div class="header">
             <h1 class="header-title">TikTok Downloader</h1>
+            <div class="language-selector">
+                <button class="language-btn">
+                    <i class="fas fa-globe"></i>
+                    <span id="current-language">Indonesia</span>
+                    <i class="fas fa-chevron-down"></i>
+                </button>
+                <div class="language-dropdown">
+                    <div class="language-option" data-lang="id">
+                        <i class="fas fa-check" style="display: none;"></i>
+                        <span>Indonesia</span>
+                    </div>
+                    <div class="language-option" data-lang="en">
+                        <i class="fas fa-check" style="display: none;"></i>
+                        <span>English</span>
+                    </div>
+                    <div class="language-option" data-lang="es">
+                        <i class="fas fa-check" style="display: none;"></i>
+                        <span>Español</span>
+                    </div>
+                    <div class="language-option" data-lang="fr">
+                        <i class="fas fa-check" style="display: none;"></i>
+                        <span>Français</span>
+                    </div>
+                </div>
+            </div>
             <button class="menu-toggle">
                 <i class="fas fa-bars"></i>
             </button>
         </div>
 
+        <!-- Steps -->
+        <div class="steps-container">
+            <div class="step active" id="step-1">
+                <div class="step-icon">
+                    <i class="fas fa-link"></i>
+                </div>
+                <div class="step-text">Tempel URL</div>
+            </div>
+            <div class="step" id="step-2">
+                <div class="step-icon">
+                    <i class="fas fa-eye"></i>
+                </div>
+                <div class="step-text">Preview</div>
+            </div>
+            <div class="step" id="step-3">
+                <div class="step-icon">
+                    <i class="fas fa-download"></i>
+                </div>
+                <div class="step-text">Download</div>
+            </div>
+        </div>
+
         <!-- Download Section -->
         <section class="download-section">
             <h2 class="section-title">Download Video TikTok</h2>
-            <p style="text-align: center; margin-bottom: 20px; color: var(--gray);">Tanpa Watermark. Cepat. Semua perangkat</p>
+            <p style="text-align: center; margin-bottom: 20px; color: var(--gray);" id="description-text">Tanpa Watermark. Cepat. Semua perangkat</p>
             
             <div class="input-group">
-                <input type="text" class="url-input" placeholder="Tempel tautan TikTok di sini" value="https://vm.tiktok.com/ZSHvA3XWq/">
-                <button class="paste-btn">Tempel</button>
+                <input type="text" class="url-input" placeholder="Tempel tautan TikTok di sini" id="url-input">
+                <button class="paste-btn" id="paste-btn">Tempel</button>
             </div>
             
             <button class="download-btn" id="fetch-btn">
-                <i class="fas fa-download"></i> Download
+                <i class="fas fa-download"></i> <span id="download-text">Download</span>
             </button>
         </section>
 
         <!-- Loading -->
         <div class="loading">
             <div class="spinner"></div>
-            <p>Memproses video TikTok...</p>
+            <p id="loading-text">Memproses video TikTok...</p>
+        </div>
+
+        <!-- Progress Bar -->
+        <div class="progress-bar" id="progress-bar">
+            <div class="progress-fill" id="progress-fill"></div>
         </div>
 
         <!-- Preview Section -->
         <section class="preview-section">
-            <h2 class="section-title">Video Preview</h2>
+            <h2 class="section-title" id="preview-title">Video Preview</h2>
             
             <div class="video-preview">
                 <img src="" alt="Preview Video" id="video-preview">
@@ -508,56 +775,178 @@
             
             <div class="download-options">
                 <button class="option-btn" id="download-sd">
-                    <i class="fas fa-download"></i> Download Video
+                    <i class="fas fa-download"></i> <span id="download-sd-text">Download Video</span>
                 </button>
                 <button class="option-btn hd" id="download-hd">
-                    <i class="fas fa-hd-video"></i> Download Video HD
+                    <i class="fas fa-hd-video"></i> <span id="download-hd-text">Download Video HD</span>
                 </button>
                 <button class="option-btn" id="download-audio">
-                    <i class="fas fa-music"></i> Download Audio
+                    <i class="fas fa-music"></i> <span id="download-audio-text">Download Audio</span>
                 </button>
+            </div>
+        </section>
+
+        <!-- History Section -->
+        <section class="history-section">
+            <h2 class="section-title" id="history-title">Riwayat Download</h2>
+            <div id="history-list">
+                <!-- History items will be added here -->
             </div>
         </section>
 
         <!-- Features Section -->
         <section class="features-section">
-            <h2 class="section-subtitle">Fitur Unggulan</h2>
+            <h2 class="section-subtitle" id="features-title">Fitur Unggulan</h2>
             <div class="features-grid">
-                <div class="feature-card">
+                <div class="feature-card" data-feature="fast-download">
                     <div class="feature-icon">
                         <i class="fas fa-bolt"></i>
                     </div>
-                    <div class="feature-name">Download Cepat</div>
+                    <div class="feature-name" id="feature-fast">Download Cepat</div>
                 </div>
-                <div class="feature-card">
+                <div class="feature-card" data-feature="hd-quality">
                     <div class="feature-icon">
                         <i class="fas fa-high-definition"></i>
                     </div>
-                    <div class="feature-name">Kualitas HD</div>
+                    <div class="feature-name" id="feature-hd">Kualitas HD</div>
                 </div>
-                <div class="feature-card">
+                <div class="feature-card" data-feature="no-watermark">
                     <div class="feature-icon">
                         <i class="fas fa-water"></i>
                     </div>
-                    <div class="feature-name">Tanpa Watermark</div>
+                    <div class="feature-name" id="feature-no-watermark">Tanpa Watermark</div>
                 </div>
-                <div class="feature-card">
+                <div class="feature-card" data-feature="original-audio">
                     <div class="feature-icon">
                         <i class="fas fa-music"></i>
                     </div>
-                    <div class="feature-name">Audio Asli</div>
+                    <div class="feature-name" id="feature-audio">Audio Asli</div>
                 </div>
-                <div class="feature-card">
+                <div class="feature-card" data-feature="all-devices">
                     <div class="feature-icon">
                         <i class="fas fa-mobile-alt"></i>
                     </div>
-                    <div class="feature-name">Semua Perangkat</div>
+                    <div class="feature-name" id="feature-devices">Semua Perangkat</div>
                 </div>
-                <div class="feature-card">
+                <div class="feature-card" data-feature="download-history">
                     <div class="feature-icon">
                         <i class="fas fa-history"></i>
                     </div>
-                    <div class="feature-name">Riwayat Download</div>
+                    <div class="feature-name" id="feature-history">Riwayat Download</div>
+                </div>
+                <div class="feature-card" data-feature="batch-download">
+                    <div class="feature-icon">
+                        <i class="fas fa-layer-group"></i>
+                    </div>
+                    <div class="feature-name" id="feature-batch">Download Batch</div>
+                </div>
+                <div class="feature-card" data-feature="schedule-download">
+                    <div class="feature-icon">
+                        <i class="fas fa-clock"></i>
+                    </div>
+                    <div class="feature-name" id="feature-schedule">Jadwal Download</div>
+                </div>
+                <div class="feature-card" data-feature="video-editor">
+                    <div class="feature-icon">
+                        <i class="fas fa-edit"></i>
+                    </div>
+                    <div class="feature-name" id="feature-editor">Editor Video</div>
+                </div>
+                <div class="feature-card" data-feature="format-converter">
+                    <div class="feature-icon">
+                        <i class="fas fa-exchange-alt"></i>
+                    </div>
+                    <div class="feature-name" id="feature-converter">Konverter Format</div>
+                </div>
+                <div class="feature-card" data-feature="cloud-storage">
+                    <div class="feature-icon">
+                        <i class="fas fa-cloud"></i>
+                    </div>
+                    <div class="feature-name" id="feature-cloud">Penyimpanan Cloud</div>
+                </div>
+                <div class="feature-card" data-feature="privacy-mode">
+                    <div class="feature-icon">
+                        <i class="fas fa-user-secret"></i>
+                    </div>
+                    <div class="feature-name" id="feature-privacy">Mode Privasi</div>
+                </div>
+                <div class="feature-card" data-feature="auto-download">
+                    <div class="feature-icon">
+                        <i class="fas fa-robot"></i>
+                    </div>
+                    <div class="feature-name" id="feature-auto">Download Otomatis</div>
+                </div>
+                <div class="feature-card" data-feature="speed-booster">
+                    <div class="feature-icon">
+                        <i class="fas fa-tachometer-alt"></i>
+                    </div>
+                    <div class="feature-name" id="feature-speed">Speed Booster</div>
+                </div>
+                <div class="feature-card" data-feature="video-info">
+                    <div class="feature-icon">
+                        <i class="fas fa-info-circle"></i>
+                    </div>
+                    <div class="feature-name" id="feature-info">Info Video Lengkap</div>
+                </div>
+                <div class="feature-card" data-feature="share-video">
+                    <div class="feature-icon">
+                        <i class="fas fa-share-alt"></i>
+                    </div>
+                    <div class="feature-name" id="feature-share">Bagikan Video</div>
+                </div>
+                <div class="feature-card" data-feature="favorites">
+                    <div class="feature-icon">
+                        <i class="fas fa-star"></i>
+                    </div>
+                    <div class="feature-name" id="feature-favorites">Favorit</div>
+                </div>
+                <div class="feature-card" data-feature="dark-mode">
+                    <div class="feature-icon">
+                        <i class="fas fa-moon"></i>
+                    </div>
+                    <div class="feature-name" id="feature-dark">Mode Gelap</div>
+                </div>
+                <div class="feature-card" data-feature="backup-restore">
+                    <div class="feature-icon">
+                        <i class="fas fa-database"></i>
+                    </div>
+                    <div class="feature-name" id="feature-backup">Backup & Restore</div>
+                </div>
+                <div class="feature-card" data-feature="custom-quality">
+                    <div class="feature-icon">
+                        <i class="fas fa-sliders-h"></i>
+                    </div>
+                    <div class="feature-name" id="feature-quality">Kualitas Kustom</div>
+                </div>
+                <div class="feature-card" data-feature="video-player">
+                    <div class="feature-icon">
+                        <i class="fas fa-play-circle"></i>
+                    </div>
+                    <div class="feature-name" id="feature-player">Pemutar Video</div>
+                </div>
+                <div class="feature-card" data-feature="ad-free">
+                    <div class="feature-icon">
+                        <i class="fas fa-ad"></i>
+                    </div>
+                    <div class="feature-name" id="feature-adfree">Tanpa Iklan</div>
+                </div>
+                <div class="feature-card" data-feature="multi-language">
+                    <div class="feature-icon">
+                        <i class="fas fa-language"></i>
+                    </div>
+                    <div class="feature-name" id="feature-language">Multi Bahasa</div>
+                </div>
+                <div class="feature-card" data-feature="secure-download">
+                    <div class="feature-icon">
+                        <i class="fas fa-shield-alt"></i>
+                    </div>
+                    <div class="feature-name" id="feature-secure">Download Aman</div>
+                </div>
+                <div class="feature-card" data-feature="auto-update">
+                    <div class="feature-icon">
+                        <i class="fas fa-sync"></i>
+                    </div>
+                    <div class="feature-name" id="feature-update">Update Otomatis</div>
                 </div>
             </div>
         </section>
@@ -579,8 +968,8 @@
 
     <script>
         // DOM Elements
-        const urlInput = document.querySelector('.url-input');
-        const pasteBtn = document.querySelector('.paste-btn');
+        const urlInput = document.getElementById('url-input');
+        const pasteBtn = document.getElementById('paste-btn');
         const fetchBtn = document.getElementById('fetch-btn');
         const previewSection = document.querySelector('.preview-section');
         const loading = document.querySelector('.loading');
@@ -592,26 +981,208 @@
         const videoInfo = document.getElementById('video-info');
         const featureCards = document.querySelectorAll('.feature-card');
         const notificationPanel = document.querySelector('.notification-panel');
+        const progressBar = document.getElementById('progress-bar');
+        const progressFill = document.getElementById('progress-fill');
+        const historySection = document.querySelector('.history-section');
+        const historyList = document.getElementById('history-list');
+        const languageBtn = document.querySelector('.language-btn');
+        const languageDropdown = document.querySelector('.language-dropdown');
+        const currentLanguage = document.getElementById('current-language');
+        const languageOptions = document.querySelectorAll('.language-option');
+        const steps = document.querySelectorAll('.step');
 
         // State variables
         let currentVideoData = null;
+        let downloadHistory = JSON.parse(localStorage.getItem('tiktokDownloadHistory')) || [];
+        let currentLang = 'id';
+
+        // Language translations
+        const translations = {
+            id: {
+                title: "TikTok Downloader",
+                description: "Tanpa Watermark. Cepat. Semua perangkat",
+                pasteBtn: "Tempel",
+                downloadBtn: "Download",
+                loadingText: "Memproses video TikTok...",
+                previewTitle: "Video Preview",
+                downloadSd: "Download Video",
+                downloadHd: "Download Video HD",
+                downloadAudio: "Download Audio",
+                featuresTitle: "Fitur Unggulan",
+                historyTitle: "Riwayat Download",
+                featureFast: "Download Cepat",
+                featureHd: "Kualitas HD",
+                featureNoWatermark: "Tanpa Watermark",
+                featureAudio: "Audio Asli",
+                featureDevices: "Semua Perangkat",
+                featureHistory: "Riwayat Download",
+                featureBatch: "Download Batch",
+                featureSchedule: "Jadwal Download",
+                featureEditor: "Editor Video",
+                featureConverter: "Konverter Format",
+                featureCloud: "Penyimpanan Cloud",
+                featurePrivacy: "Mode Privasi",
+                featureAuto: "Download Otomatis",
+                featureSpeed: "Speed Booster",
+                featureInfo: "Info Video Lengkap",
+                featureShare: "Bagikan Video",
+                featureFavorites: "Favorit",
+                featureDark: "Mode Gelap",
+                featureBackup: "Backup & Restore",
+                featureQuality: "Kualitas Kustom",
+                featurePlayer: "Pemutar Video",
+                featureAdfree: "Tanpa Iklan",
+                featureLanguage: "Multi Bahasa",
+                featureSecure: "Download Aman",
+                featureUpdate: "Update Otomatis"
+            },
+            en: {
+                title: "TikTok Downloader",
+                description: "No Watermark. Fast. All devices",
+                pasteBtn: "Paste",
+                downloadBtn: "Download",
+                loadingText: "Processing TikTok video...",
+                previewTitle: "Video Preview",
+                downloadSd: "Download Video",
+                downloadHd: "Download HD Video",
+                downloadAudio: "Download Audio",
+                featuresTitle: "Premium Features",
+                historyTitle: "Download History",
+                featureFast: "Fast Download",
+                featureHd: "HD Quality",
+                featureNoWatermark: "No Watermark",
+                featureAudio: "Original Audio",
+                featureDevices: "All Devices",
+                featureHistory: "Download History",
+                featureBatch: "Batch Download",
+                featureSchedule: "Schedule Download",
+                featureEditor: "Video Editor",
+                featureConverter: "Format Converter",
+                featureCloud: "Cloud Storage",
+                featurePrivacy: "Privacy Mode",
+                featureAuto: "Auto Download",
+                featureSpeed: "Speed Booster",
+                featureInfo: "Complete Video Info",
+                featureShare: "Share Video",
+                featureFavorites: "Favorites",
+                featureDark: "Dark Mode",
+                featureBackup: "Backup & Restore",
+                featureQuality: "Custom Quality",
+                featurePlayer: "Video Player",
+                featureAdfree: "Ad Free",
+                featureLanguage: "Multi Language",
+                featureSecure: "Secure Download",
+                featureUpdate: "Auto Update"
+            },
+            es: {
+                title: "TikTok Downloader",
+                description: "Sin Marca de Agua. Rápido. Todos los dispositivos",
+                pasteBtn: "Pegar",
+                downloadBtn: "Descargar",
+                loadingText: "Procesando video de TikTok...",
+                previewTitle: "Vista Previa",
+                downloadSd: "Descargar Video",
+                downloadHd: "Descargar Video HD",
+                downloadAudio: "Descargar Audio",
+                featuresTitle: "Características Premium",
+                historyTitle: "Historial de Descargas",
+                featureFast: "Descarga Rápida",
+                featureHd: "Calidad HD",
+                featureNoWatermark: "Sin Marca de Agua",
+                featureAudio: "Audio Original",
+                featureDevices: "Todos los Dispositivos",
+                featureHistory: "Historial de Descargas",
+                featureBatch: "Descarga por Lotes",
+                featureSchedule: "Programar Descarga",
+                featureEditor: "Editor de Video",
+                featureConverter: "Convertidor de Formato",
+                featureCloud: "Almacenamiento en la Nube",
+                featurePrivacy: "Modo Privacidad",
+                featureAuto: "Descarga Automática",
+                featureSpeed: "Acelerador de Velocidad",
+                featureInfo: "Información Completa del Video",
+                featureShare: "Compartir Video",
+                featureFavorites: "Favoritos",
+                featureDark: "Modo Oscuro",
+                featureBackup: "Copia de Seguridad",
+                featureQuality: "Calidad Personalizada",
+                featurePlayer: "Reproductor de Video",
+                featureAdfree: "Sin Anuncios",
+                featureLanguage: "Idiomas Múltiples",
+                featureSecure: "Descarga Segura",
+                featureUpdate: "Actualización Automática"
+            },
+            fr: {
+                title: "Téléchargeur TikTok",
+                description: "Sans Filigrane. Rapide. Tous les appareils",
+                pasteBtn: "Coller",
+                downloadBtn: "Télécharger",
+                loadingText: "Traitement de la vidéo TikTok...",
+                previewTitle: "Aperçu Vidéo",
+                downloadSd: "Télécharger Vidéo",
+                downloadHd: "Télécharger Vidéo HD",
+                downloadAudio: "Télécharger Audio",
+                featuresTitle: "Fonctionnalités Premium",
+                historyTitle: "Historique des Téléchargements",
+                featureFast: "Téléchargement Rapide",
+                featureHd: "Qualité HD",
+                featureNoWatermark: "Sans Filigrane",
+                featureAudio: "Audio Original",
+                featureDevices: "Tous les Appareils",
+                featureHistory: "Historique des Téléchargements",
+                featureBatch: "Téléchargement par Lots",
+                featureSchedule: "Planifier Téléchargement",
+                featureEditor: "Éditeur Vidéo",
+                featureConverter: "Convertisseur de Format",
+                featureCloud: "Stockage Cloud",
+                featurePrivacy: "Mode Confidentialité",
+                featureAuto: "Téléchargement Automatique",
+                featureSpeed: "Booster de Vitesse",
+                featureInfo: "Info Vidéo Complète",
+                featureShare: "Partager Vidéo",
+                featureFavorites: "Favoris",
+                featureDark: "Mode Sombre",
+                featureBackup: "Sauvegarde & Restauration",
+                featureQuality: "Qualité Personnalisée",
+                featurePlayer: "Lecteur Vidéo",
+                featureAdfree: "Sans Publicité",
+                featureLanguage: "Multilingue",
+                featureSecure: "Téléchargement Sécurisé",
+                featureUpdate: "Mise à Jour Automatique"
+            }
+        };
 
         // Initialize
         document.addEventListener('DOMContentLoaded', function() {
             setupEventListeners();
+            updateLanguage(currentLang);
+            renderDownloadHistory();
             
             // Auto-focus pada input URL
             urlInput.focus();
-            
-            // Auto-fetch untuk URL yang sudah ada
-            if (urlInput.value.trim() && isValidTikTokUrl(urlInput.value.trim())) {
-                setTimeout(() => {
-                    fetchBtn.click();
-                }, 500);
-            }
         });
 
         function setupEventListeners() {
+            // Language selector
+            languageBtn.addEventListener('click', () => {
+                languageDropdown.classList.toggle('active');
+            });
+
+            languageOptions.forEach(option => {
+                option.addEventListener('click', () => {
+                    const lang = option.getAttribute('data-lang');
+                    updateLanguage(lang);
+                    languageDropdown.classList.remove('active');
+                });
+            });
+
+            // Close language dropdown when clicking outside
+            document.addEventListener('click', (e) => {
+                if (!languageBtn.contains(e.target) && !languageDropdown.contains(e.target)) {
+                    languageDropdown.classList.remove('active');
+                }
+            });
+
             // Paste URL
             pasteBtn.addEventListener('click', async () => {
                 try {
@@ -672,7 +1243,7 @@
                 
                 // Simulate download completion
                 setTimeout(() => {
-                    showNotification('Video SD berhasil didownload dan disimpan di galeri!', 'success');
+                    downloadVideo(currentVideoData, 'SD');
                 }, 1500);
             });
 
@@ -690,7 +1261,7 @@
                 
                 // Simulate download completion
                 setTimeout(() => {
-                    showNotification('Video HD berhasil didownload dan disimpan di galeri!', 'success');
+                    downloadVideo(currentVideoData, 'HD');
                 }, 1500);
             });
 
@@ -708,7 +1279,7 @@
                 
                 // Simulate download completion
                 setTimeout(() => {
-                    showNotification('Audio berhasil didownload dan disimpan di galeri!', 'success');
+                    downloadAudio(currentVideoData);
                 }, 1500);
             });
 
@@ -729,8 +1300,8 @@
                         card.style.animation = '';
                     }, 500);
                     
-                    const featureName = card.querySelector('.feature-name').textContent;
-                    showNotification(`Fitur ${featureName} diaktifkan`, 'info');
+                    const feature = card.getAttribute('data-feature');
+                    handleFeatureClick(feature);
                 });
             });
 
@@ -763,6 +1334,145 @@
             });
         }
 
+        // Update language
+        function updateLanguage(lang) {
+            currentLang = lang;
+            currentLanguage.textContent = getLanguageName(lang);
+            
+            // Update all text elements
+            document.getElementById('description-text').textContent = translations[lang].description;
+            document.getElementById('download-text').textContent = translations[lang].downloadBtn;
+            document.getElementById('loading-text').textContent = translations[lang].loadingText;
+            document.getElementById('preview-title').textContent = translations[lang].previewTitle;
+            document.getElementById('download-sd-text').textContent = translations[lang].downloadSd;
+            document.getElementById('download-hd-text').textContent = translations[lang].downloadHd;
+            document.getElementById('download-audio-text').textContent = translations[lang].downloadAudio;
+            document.getElementById('features-title').textContent = translations[lang].featuresTitle;
+            document.getElementById('history-title').textContent = translations[lang].historyTitle;
+            
+            // Update feature names
+            document.getElementById('feature-fast').textContent = translations[lang].featureFast;
+            document.getElementById('feature-hd').textContent = translations[lang].featureHd;
+            document.getElementById('feature-no-watermark').textContent = translations[lang].featureNoWatermark;
+            document.getElementById('feature-audio').textContent = translations[lang].featureAudio;
+            document.getElementById('feature-devices').textContent = translations[lang].featureDevices;
+            document.getElementById('feature-history').textContent = translations[lang].featureHistory;
+            document.getElementById('feature-batch').textContent = translations[lang].featureBatch;
+            document.getElementById('feature-schedule').textContent = translations[lang].featureSchedule;
+            document.getElementById('feature-editor').textContent = translations[lang].featureEditor;
+            document.getElementById('feature-converter').textContent = translations[lang].featureConverter;
+            document.getElementById('feature-cloud').textContent = translations[lang].featureCloud;
+            document.getElementById('feature-privacy').textContent = translations[lang].featurePrivacy;
+            document.getElementById('feature-auto').textContent = translations[lang].featureAuto;
+            document.getElementById('feature-speed').textContent = translations[lang].featureSpeed;
+            document.getElementById('feature-info').textContent = translations[lang].featureInfo;
+            document.getElementById('feature-share').textContent = translations[lang].featureShare;
+            document.getElementById('feature-favorites').textContent = translations[lang].featureFavorites;
+            document.getElementById('feature-dark').textContent = translations[lang].featureDark;
+            document.getElementById('feature-backup').textContent = translations[lang].featureBackup;
+            document.getElementById('feature-quality').textContent = translations[lang].featureQuality;
+            document.getElementById('feature-player').textContent = translations[lang].featurePlayer;
+            document.getElementById('feature-adfree').textContent = translations[lang].featureAdfree;
+            document.getElementById('feature-language').textContent = translations[lang].featureLanguage;
+            document.getElementById('feature-secure').textContent = translations[lang].featureSecure;
+            document.getElementById('feature-update').textContent = translations[lang].featureUpdate;
+            
+            // Update language options
+            languageOptions.forEach(option => {
+                const optionLang = option.getAttribute('data-lang');
+                const checkIcon = option.querySelector('i.fa-check');
+                if (optionLang === lang) {
+                    checkIcon.style.display = 'inline-block';
+                } else {
+                    checkIcon.style.display = 'none';
+                }
+            });
+            
+            // Save language preference
+            localStorage.setItem('tiktokDownloaderLanguage', lang);
+        }
+
+        function getLanguageName(lang) {
+            const names = {
+                'id': 'Indonesia',
+                'en': 'English',
+                'es': 'Español',
+                'fr': 'Français'
+            };
+            return names[lang] || 'Indonesia';
+        }
+
+        // Handle feature clicks
+        function handleFeatureClick(feature) {
+            switch(feature) {
+                case 'download-history':
+                    historySection.classList.toggle('active');
+                    if (historySection.classList.contains('active')) {
+                        historySection.scrollIntoView({ behavior: 'smooth' });
+                    }
+                    break;
+                case 'batch-download':
+                    showNotification('Fitur Download Batch akan segera hadir!', 'info');
+                    break;
+                case 'schedule-download':
+                    showNotification('Fitur Jadwal Download akan segera hadir!', 'info');
+                    break;
+                case 'video-editor':
+                    showNotification('Fitur Editor Video akan segera hadir!', 'info');
+                    break;
+                case 'format-converter':
+                    showNotification('Fitur Konverter Format akan segera hadir!', 'info');
+                    break;
+                case 'cloud-storage':
+                    showNotification('Fitur Penyimpanan Cloud akan segera hadir!', 'info');
+                    break;
+                case 'privacy-mode':
+                    showNotification('Fitur Mode Privasi akan segera hadir!', 'info');
+                    break;
+                case 'auto-download':
+                    showNotification('Fitur Download Otomatis akan segera hadir!', 'info');
+                    break;
+                case 'speed-booster':
+                    showNotification('Fitur Speed Booster akan segera hadir!', 'info');
+                    break;
+                case 'video-info':
+                    showNotification('Fitur Info Video Lengkap akan segera hadir!', 'info');
+                    break;
+                case 'share-video':
+                    showNotification('Fitur Bagikan Video akan segera hadir!', 'info');
+                    break;
+                case 'favorites':
+                    showNotification('Fitur Favorit akan segera hadir!', 'info');
+                    break;
+                case 'dark-mode':
+                    showNotification('Anda sudah menggunakan Mode Gelap!', 'info');
+                    break;
+                case 'backup-restore':
+                    showNotification('Fitur Backup & Restore akan segera hadir!', 'info');
+                    break;
+                case 'custom-quality':
+                    showNotification('Fitur Kualitas Kustom akan segera hadir!', 'info');
+                    break;
+                case 'video-player':
+                    showNotification('Fitur Pemutar Video akan segera hadir!', 'info');
+                    break;
+                case 'ad-free':
+                    showNotification('Aplikasi ini sudah bebas iklan!', 'info');
+                    break;
+                case 'multi-language':
+                    showNotification('Fitur Multi Bahasa sudah aktif!', 'info');
+                    break;
+                case 'secure-download':
+                    showNotification('Download Anda sudah aman!', 'info');
+                    break;
+                case 'auto-update':
+                    showNotification('Fitur Update Otomatis akan segera hadir!', 'info');
+                    break;
+                default:
+                    showNotification(`Fitur ${feature} diaktifkan`, 'info');
+            }
+        }
+
         // Validasi URL TikTok
         function isValidTikTokUrl(url) {
             const tiktokPatterns = [
@@ -779,6 +1489,7 @@
         async function fetchVideoData(url) {
             showLoading();
             hidePreview();
+            updateStep(1);
             
             try {
                 // Menggunakan API TikTok downloader
@@ -803,6 +1514,7 @@
                     
                     hideLoading();
                     displayVideoData(currentVideoData);
+                    updateStep(2);
                 } else {
                     throw new Error('Gagal mengambil data video');
                 }
@@ -831,6 +1543,7 @@
                         
                         hideLoading();
                         displayVideoData(currentVideoData);
+                        updateStep(2);
                     } else {
                         throw new Error('Gagal mengambil data video');
                     }
@@ -876,6 +1589,142 @@
             showNotification('Data video berhasil diambil', 'success');
         }
 
+        // Download video
+        function downloadVideo(data, quality) {
+            // Simulate download progress
+            let progress = 0;
+            const interval = setInterval(() => {
+                progress += 5;
+                progressFill.style.width = `${progress}%`;
+                
+                if (progress >= 100) {
+                    clearInterval(interval);
+                    
+                    // Add to download history
+                    addToHistory(data, quality);
+                    
+                    // Show success message
+                    showNotification(`Video ${quality} berhasil didownload dan disimpan di galeri!`, 'success');
+                    
+                    // Update step
+                    updateStep(3);
+                    
+                    // Reset progress after a delay
+                    setTimeout(() => {
+                        progressFill.style.width = '0%';
+                    }, 2000);
+                }
+            }, 100);
+        }
+
+        // Download audio
+        function downloadAudio(data) {
+            // Simulate download progress
+            let progress = 0;
+            const interval = setInterval(() => {
+                progress += 5;
+                progressFill.style.width = `${progress}%`;
+                
+                if (progress >= 100) {
+                    clearInterval(interval);
+                    
+                    // Add to download history
+                    addToHistory(data, 'Audio');
+                    
+                    // Show success message
+                    showNotification('Audio berhasil didownload dan disimpan di galeri!', 'success');
+                    
+                    // Update step
+                    updateStep(3);
+                    
+                    // Reset progress after a delay
+                    setTimeout(() => {
+                        progressFill.style.width = '0%';
+                    }, 2000);
+                }
+            }, 100);
+        }
+
+        // Add to download history
+        function addToHistory(data, type) {
+            const historyItem = {
+                id: Date.now(),
+                title: data.title,
+                author: data.author,
+                thumbnail: data.thumbnail,
+                type: type,
+                date: new Date().toLocaleString()
+            };
+            
+            downloadHistory.unshift(historyItem);
+            
+            // Keep only last 20 items
+            if (downloadHistory.length > 20) {
+                downloadHistory = downloadHistory.slice(0, 20);
+            }
+            
+            // Save to localStorage
+            localStorage.setItem('tiktokDownloadHistory', JSON.stringify(downloadHistory));
+            
+            // Update history display
+            renderDownloadHistory();
+        }
+
+        // Render download history
+        function renderDownloadHistory() {
+            if (downloadHistory.length === 0) {
+                historyList.innerHTML = '<p style="text-align: center; color: var(--gray);">Belum ada riwayat download</p>';
+                return;
+            }
+            
+            historyList.innerHTML = '';
+            
+            downloadHistory.forEach(item => {
+                const historyItem = document.createElement('div');
+                historyItem.className = 'history-item';
+                historyItem.innerHTML = `
+                    <img src="${item.thumbnail}" alt="${item.title}" class="history-thumbnail">
+                    <div class="history-info">
+                        <div class="history-title">${item.title}</div>
+                        <div class="history-date">${item.date} • ${item.type}</div>
+                    </div>
+                    <button class="history-action" data-id="${item.id}">
+                        <i class="fas fa-redo"></i>
+                    </button>
+                `;
+                
+                historyList.appendChild(historyItem);
+            });
+            
+            // Add event listeners to re-download buttons
+            document.querySelectorAll('.history-action').forEach(button => {
+                button.addEventListener('click', (e) => {
+                    const id = parseInt(button.getAttribute('data-id'));
+                    const item = downloadHistory.find(i => i.id === id);
+                    
+                    if (item) {
+                        // Simulate re-download
+                        showNotification(`Mengunduh ulang ${item.type}...`, 'info');
+                        
+                        setTimeout(() => {
+                            showNotification(`${item.type} berhasil diunduh ulang!`, 'success');
+                        }, 1500);
+                    }
+                });
+            });
+        }
+
+        // Update step indicator
+        function updateStep(stepNumber) {
+            steps.forEach((step, index) => {
+                if (index < stepNumber) {
+                    step.classList.add('active');
+                } else {
+                    step.classList.remove('active');
+                }
+            });
+        }
+
         // Tampilkan loading
         function showLoading() {
             loading.classList.add('active');
@@ -916,15 +1765,28 @@
             const notification = document.createElement('div');
             notification.className = `notification ${type}`;
             notification.innerHTML = `
-                <i class="fas ${icon}"></i>
-                <p>${message}</p>
+                <div style="display: flex; align-items: center; gap: 10px;">
+                    <i class="fas ${icon}"></i>
+                    <p>${message}</p>
+                </div>
+                <button class="notification-close">
+                    <i class="fas fa-times"></i>
+                </button>
             `;
             
             notificationPanel.appendChild(notification);
             
+            // Add close functionality
+            const closeBtn = notification.querySelector('.notification-close');
+            closeBtn.addEventListener('click', () => {
+                notification.remove();
+            });
+            
             // Auto remove after 5 seconds
             setTimeout(() => {
-                notification.remove();
+                if (notification.parentNode) {
+                    notification.remove();
+                }
             }, 5000);
         }
     </script>
