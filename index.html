@@ -31,7 +31,6 @@
             min-height: 100vh;
             padding: 20px;
             overflow-x: hidden;
-            transition: all 0.3s ease;
         }
         
         .container {
@@ -43,7 +42,6 @@
             overflow: hidden;
             animation: fadeIn 0.8s ease;
             position: relative;
-            transition: all 0.3s ease;
         }
         
         header {
@@ -1217,135 +1215,6 @@
             margin-bottom: 15px;
         }
         
-        /* Language Selector */
-        .language-selector {
-            position: absolute;
-            top: 20px;
-            right: 20px;
-            z-index: 10;
-        }
-        
-        .language-btn {
-            background: rgba(255, 255, 255, 0.2);
-            color: white;
-            border: none;
-            padding: 8px 15px;
-            border-radius: 20px;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            transition: all 0.3s;
-        }
-        
-        .language-btn:hover {
-            background: rgba(255, 255, 255, 0.3);
-        }
-        
-        .language-dropdown {
-            position: absolute;
-            top: 100%;
-            right: 0;
-            background: white;
-            border-radius: 10px;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-            padding: 10px 0;
-            display: none;
-            z-index: 100;
-            min-width: 150px;
-        }
-        
-        .language-dropdown.active {
-            display: block;
-            animation: slideDown 0.3s ease;
-        }
-        
-        .language-option {
-            padding: 10px 15px;
-            cursor: pointer;
-            transition: all 0.3s;
-        }
-        
-        .language-option:hover {
-            background: var(--gray);
-        }
-        
-        .language-option.active {
-            color: var(--primary);
-            font-weight: bold;
-        }
-        
-        /* API Selector */
-        .api-selector {
-            margin-top: 15px;
-            padding: 15px;
-            background: var(--gray);
-            border-radius: 12px;
-            animation: slideIn 0.5s ease;
-        }
-        
-        .api-options {
-            display: flex;
-            gap: 10px;
-            margin-top: 10px;
-            flex-wrap: wrap;
-        }
-        
-        .api-option {
-            padding: 8px 15px;
-            background: white;
-            border: 2px solid #ddd;
-            border-radius: 8px;
-            cursor: pointer;
-            transition: all 0.3s;
-        }
-        
-        .api-option.active {
-            border-color: var(--primary);
-            background: rgba(255, 0, 80, 0.05);
-        }
-        
-        /* Download Process */
-        .download-process {
-            margin-top: 20px;
-            padding: 20px;
-            background: var(--gray);
-            border-radius: 15px;
-            display: none;
-        }
-        
-        .process-step {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-            margin-bottom: 15px;
-        }
-        
-        .step-icon {
-            width: 30px;
-            height: 30px;
-            border-radius: 50%;
-            background: #ddd;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 14px;
-        }
-        
-        .step-icon.active {
-            background: var(--primary);
-            color: white;
-        }
-        
-        .step-icon.completed {
-            background: var(--success);
-            color: white;
-        }
-        
-        .step-text {
-            flex: 1;
-        }
-        
         @media (max-width: 768px) {
             body {
                 padding: 10px;
@@ -1407,11 +1276,6 @@
                 left: 10px;
                 max-width: none;
             }
-            
-            .language-selector {
-                top: 10px;
-                right: 10px;
-            }
         }
     </style>
 </head>
@@ -1420,19 +1284,6 @@
     <button class="mobile-menu-btn" id="mobile-menu-btn">
         <i class="fas fa-bars"></i>
     </button>
-    
-    <!-- Language Selector -->
-    <div class="language-selector">
-        <button class="language-btn" id="language-btn">
-            <i class="fas fa-globe"></i> ID <i class="fas fa-chevron-down"></i>
-        </button>
-        <div class="language-dropdown" id="language-dropdown">
-            <div class="language-option active" data-lang="id">Indonesia</div>
-            <div class="language-option" data-lang="en">English</div>
-            <div class="language-option" data-lang="es">Español</div>
-            <div class="language-option" data-lang="fr">Français</div>
-        </div>
-    </div>
     
     <!-- Mobile Sidebar -->
     <div class="sidebar" id="sidebar">
@@ -1446,19 +1297,19 @@
         </div>
         <div class="sidebar-nav">
             <div class="sidebar-nav-item active" data-tab="home">
-                <i class="fas fa-home"></i> <span data-translate="home">Beranda</span>
+                <i class="fas fa-home"></i> Beranda
             </div>
             <div class="sidebar-nav-item" data-tab="download">
-                <i class="fas fa-download"></i> <span data-translate="download">Download</span>
+                <i class="fas fa-download"></i> Download
             </div>
             <div class="sidebar-nav-item" data-tab="history">
-                <i class="fas fa-history"></i> <span data-translate="history">Riwayat</span>
+                <i class="fas fa-history"></i> Riwayat
             </div>
             <div class="sidebar-nav-item" data-tab="favorites">
-                <i class="fas fa-heart"></i> <span data-translate="favorites">Favorit</span>
+                <i class="fas fa-heart"></i> Favorit
             </div>
             <div class="sidebar-nav-item" data-tab="settings">
-                <i class="fas fa-cog"></i> <span data-translate="settings">Pengaturan</span>
+                <i class="fas fa-cog"></i> Pengaturan
             </div>
         </div>
         <div class="sidebar-footer">
@@ -1480,47 +1331,36 @@
     <div class="container">
         <header>
             <div class="logo"><i class="fab fa-tiktok"></i></div>
-            <h1 data-translate="title">TikTok Downloader Premium</h1>
-            <p data-translate="subtitle">Download video TikTok tanpa watermark, audio, dan kualitas HD dengan mudah dan cepat</p>
+            <h1>TikTok Downloader Premium</h1>
+            <p>Download video TikTok tanpa watermark, audio, dan kualitas HD dengan mudah dan cepat</p>
         </header>
         
         <div class="nav-tabs">
             <div class="nav-tab active" data-tab="home">
-                <i class="fas fa-home"></i> <span data-translate="home">Beranda</span>
+                <i class="fas fa-home"></i> Beranda
             </div>
             <div class="nav-tab" data-tab="download">
-                <i class="fas fa-download"></i> <span data-translate="download">Download</span>
+                <i class="fas fa-download"></i> Download
             </div>
             <div class="nav-tab" data-tab="history">
-                <i class="fas fa-history"></i> <span data-translate="history">Riwayat</span>
+                <i class="fas fa-history"></i> Riwayat
             </div>
             <div class="nav-tab" data-tab="favorites">
-                <i class="fas fa-heart"></i> <span data-translate="favorites">Favorit</span>
+                <i class="fas fa-heart"></i> Favorit
             </div>
         </div>
         
         <div class="tab-content active" id="home-tab">
             <div class="input-section">
-                <input type="text" class="url-input" placeholder="Tempel URL video TikTok di sini..." value="https://vm.tiktok.com/ZSHvA3XWq/" id="url-input">
+                <input type="text" class="url-input" placeholder="Tempel URL video TikTok di sini..." value="https://vm.tiktok.com/ZSHvA3XWq/">
                 <button class="btn" id="fetch-btn">
-                    <span class="btn-text" data-translate="fetch">Ambil Video</span>
+                    <span class="btn-text">Ambil Video</span>
                     <span class="btn-icon"><i class="fas fa-search"></i></span>
                 </button>
                 
-                <div class="api-selector">
-                    <div class="options-title">
-                        <i class="fas fa-plug"></i> <span data-translate="api">Pilih API:</span>
-                    </div>
-                    <div class="api-options">
-                        <div class="api-option active" data-api="snaptik">SnapTik</div>
-                        <div class="api-option" data-api="tikwm">TikWM</div>
-                        <div class="api-option" data-api="musicallydown">MusicallyDown</div>
-                    </div>
-                </div>
-                
                 <div class="auto-download-option">
                     <input type="checkbox" id="auto-download">
-                    <label for="auto-download" data-translate="auto-download">Download otomatis setelah memilih kualitas</label>
+                    <label for="auto-download">Download otomatis setelah mengambil data video</label>
                 </div>
                 
                 <div class="search-history" id="search-history">
@@ -1528,7 +1368,7 @@
                 </div>
                 
                 <div class="url-examples">
-                    <p><i class="fas fa-info-circle"></i> <span data-translate="examples">Contoh URL yang didukung:</span></p>
+                    <p><i class="fas fa-info-circle"></i> Contoh URL yang didukung:</p>
                     <div class="example-url">https://vm.tiktok.com/ZSabc123/</div>
                     <div class="example-url">https://www.tiktok.com/@user/video/123456789</div>
                     <div class="example-url">https://vt.tiktok.com/ZSdef456/</div>
@@ -1540,55 +1380,36 @@
             
             <div class="loading" id="loading">
                 <div class="spinner"></div>
-                <p data-translate="fetching">Mengambil data video...</p>
+                <p>Mengambil data video...</p>
                 <div class="progress-bar">
                     <div class="progress" id="download-progress"></div>
                 </div>
             </div>
             
-            <div class="download-process" id="download-process">
-                <div class="process-step">
-                    <div class="step-icon completed"><i class="fas fa-check"></i></div>
-                    <div class="step-text" data-translate="step1">URL divalidasi</div>
-                </div>
-                <div class="process-step">
-                    <div class="step-icon active"><i class="fas fa-sync"></i></div>
-                    <div class="step-text" data-translate="step2">Mengambil data video</div>
-                </div>
-                <div class="process-step">
-                    <div class="step-icon"><i class="fas fa-download"></i></div>
-                    <div class="step-text" data-translate="step3">Mempersiapkan download</div>
-                </div>
-                <div class="process-step">
-                    <div class="step-icon"><i class="fas fa-check-circle"></i></div>
-                    <div class="step-text" data-translate="step4">Download selesai</div>
-                </div>
-            </div>
-            
             <div class="options-section">
                 <div class="options-title">
-                    <i class="fas fa-cog"></i> <span data-translate="options">Pilih Opsi Download:</span>
+                    <i class="fas fa-cog"></i> Pilih Opsi Download:
                 </div>
                 <div class="options-grid">
                     <div class="option-card active" data-type="nowm">
                         <div class="option-icon"><i class="fas fa-film"></i></div>
-                        <div class="option-name" data-translate="nowm">Tanpa Watermark</div>
-                        <div class="option-desc" data-translate="nowm-desc">Video berkualitas tinggi tanpa logo TikTok</div>
+                        <div class="option-name">Tanpa Watermark</div>
+                        <div class="option-desc">Video berkualitas tinggi tanpa logo TikTok</div>
                     </div>
                     <div class="option-card" data-type="audio">
                         <div class="option-icon"><i class="fas fa-music"></i></div>
-                        <div class="option-name" data-translate="audio">Download Audio</div>
-                        <div class="option-desc" data-translate="audio-desc">Ekstrak dan download hanya file audio (MP3)</div>
+                        <div class="option-name">Download Audio</div>
+                        <div class="option-desc">Ekstrak dan download hanya file audio (MP3)</div>
                     </div>
                     <div class="option-card" data-type="hd">
                         <div class="option-icon"><i class="fas fa-hd-video"></i></div>
-                        <div class="option-name" data-translate="hd">Kualitas HD</div>
-                        <div class="option-desc" data-translate="hd-desc">Video resolusi tinggi 720p / 1080p</div>
+                        <div class="option-name">Kualitas HD</div>
+                        <div class="option-desc">Video resolusi tinggi 720p / 1080p</div>
                     </div>
                     <div class="option-card" data-type="slideshow">
                         <div class="option-icon"><i class="fas fa-images"></i></div>
-                        <div class="option-name" data-translate="slideshow">Slideshow</div>
-                        <div class="option-desc" data-translate="slideshow-desc">Download semua gambar dari slideshow</div>
+                        <div class="option-name">Slideshow</div>
+                        <div class="option-desc">Download semua gambar dari slideshow</div>
                     </div>
                 </div>
             </div>
@@ -1601,13 +1422,13 @@
                 
                 <div class="download-options" id="download-options" style="display: none;">
                     <div class="options-title">
-                        <i class="fas fa-layer-group"></i> <span data-translate="quality">Pilih Kualitas:</span>
+                        <i class="fas fa-layer-group"></i> Pilih Kualitas:
                     </div>
                     <div class="quality-buttons" id="quality-buttons"></div>
                 </div>
                 
                 <button class="btn download-btn btn-success" id="download-btn">
-                    <span class="btn-text" data-translate="download-now">Download Sekarang</span>
+                    <span class="btn-text">Download Sekarang</span>
                     <span class="btn-icon"><i class="fas fa-download"></i></span>
                 </button>
                 
@@ -1626,25 +1447,25 @@
                 <div class="stats">
                     <div class="stat-item">
                         <div class="stat-value" id="download-count">0</div>
-                        <div class="stat-label" data-translate="total-downloads">Total Download</div>
+                        <div class="stat-label">Total Download</div>
                     </div>
                     <div class="stat-item">
                         <div class="stat-value" id="success-rate">100%</div>
-                        <div class="stat-label" data-translate="success-rate">Tingkat Keberhasilan</div>
+                        <div class="stat-label">Tingkat Keberhasilan</div>
                     </div>
                     <div class="stat-item">
                         <div class="stat-value" id="today-count">0</div>
-                        <div class="stat-label" data-translate="today-downloads">Download Hari Ini</div>
+                        <div class="stat-label">Download Hari Ini</div>
                     </div>
                 </div>
             </div>
             
             <div class="speed-test">
                 <div class="options-title">
-                    <i class="fas fa-tachometer-alt"></i> <span data-translate="speed-test">Tes Kecepatan Download</span>
+                    <i class="fas fa-tachometer-alt"></i> Tes Kecepatan Download
                 </div>
                 <button class="btn btn-secondary" id="speed-test-btn">
-                    <span class="btn-text" data-translate="start-test">Mulai Tes Kecepatan</span>
+                    <span class="btn-text">Mulai Tes Kecepatan</span>
                     <span class="btn-icon"><i class="fas fa-bolt"></i></span>
                 </button>
                 <div class="speed-result" id="speed-result"></div>
@@ -1652,28 +1473,28 @@
             
             <div class="features-section">
                 <div class="options-title">
-                    <i class="fas fa-star"></i> <span data-translate="features">Fitur Unggulan:</span>
+                    <i class="fas fa-star"></i> Fitur Unggulan:
                 </div>
                 <div class="features-grid">
                     <div class="feature-card">
                         <div class="feature-icon"><i class="fas fa-bolt"></i></div>
-                        <div class="feature-title" data-translate="fast">Download Cepat</div>
-                        <div class="feature-desc" data-translate="fast-desc">Proses download yang sangat cepat dengan teknologi terbaru</div>
+                        <div class="feature-title">Download Cepat</div>
+                        <div class="feature-desc">Proses download yang sangat cepat dengan teknologi terbaru</div>
                     </div>
                     <div class="feature-card">
                         <div class="feature-icon"><i class="fas fa-shield-alt"></i></div>
-                        <div class="feature-title" data-translate="secure">Aman & Privasi</div>
-                        <div class="feature-desc" data-translate="secure-desc">Data Anda aman dan tidak disimpan di server kami</div>
+                        <div class="feature-title">Aman & Privasi</div>
+                        <div class="feature-desc">Data Anda aman dan tidak disimpan di server kami</div>
                     </div>
                     <div class="feature-card">
                         <div class="feature-icon"><i class="fas fa-mobile-alt"></i></div>
-                        <div class="feature-title" data-translate="responsive">Responsif</div>
-                        <div class="feature-desc" data-translate="responsive-desc">Bekerja dengan baik di semua perangkat dan browser</div>
+                        <div class="feature-title">Responsif</div>
+                        <div class="feature-desc">Bekerja dengan baik di semua perangkat dan browser</div>
                     </div>
                     <div class="feature-card">
                         <div class="feature-icon"><i class="fas fa-infinity"></i></div>
-                        <div class="feature-title" data-translate="unlimited">Tanpa Batas</div>
-                        <div class="feature-desc" data-translate="unlimited-desc">Download sebanyak yang Anda mau tanpa batasan</div>
+                        <div class="feature-title">Tanpa Batas</div>
+                        <div class="feature-desc">Download sebanyak yang Anda mau tanpa batasan</div>
                     </div>
                 </div>
             </div>
@@ -1682,54 +1503,54 @@
         <div class="tab-content" id="download-tab">
             <div class="batch-download">
                 <h2 class="options-title">
-                    <i class="fas fa-layer-group"></i> <span data-translate="batch">Download Batch</span>
+                    <i class="fas fa-layer-group"></i> Download Batch
                 </h2>
-                <p class="batch-info" data-translate="batch-info">Masukkan beberapa URL TikTok (satu URL per baris) untuk mendownload banyak video sekaligus</p>
+                <p class="batch-info">Masukkan beberapa URL TikTok (satu URL per baris) untuk mendownload banyak video sekaligus</p>
                 <textarea class="batch-input" placeholder="https://vm.tiktok.com/ZSabc123/
 https://www.tiktok.com/@user1/video/123456789
 https://vt.tiktok.com/ZSdef456/"></textarea>
                 <button class="btn btn-secondary" id="batch-download-btn">
-                    <span class="btn-text" data-translate="download-all">Download Semua</span>
+                    <span class="btn-text">Download Semua</span>
                     <span class="btn-icon"><i class="fas fa-download"></i></span>
                 </button>
             </div>
             
             <div class="scheduler">
                 <h2 class="options-title">
-                    <i class="fas fa-clock"></i> <span data-translate="scheduler">Penjadwalan Download</span>
+                    <i class="fas fa-clock"></i> Penjadwalan Download
                 </h2>
-                <p class="batch-info" data-translate="scheduler-info">Jadwalkan download untuk waktu tertentu</p>
+                <p class="batch-info">Jadwalkan download untuk waktu tertentu</p>
                 <input type="datetime-local" class="scheduler-input" id="schedule-time">
                 <button class="btn btn-secondary" id="schedule-download-btn">
-                    <span class="btn-text" data-translate="schedule">Jadwalkan Download</span>
+                    <span class="btn-text">Jadwalkan Download</span>
                     <span class="btn-icon"><i class="fas fa-calendar-plus"></i></span>
                 </button>
             </div>
             
             <div class="options-section">
                 <div class="options-title">
-                    <i class="fas fa-sliders-h"></i> <span data-translate="settings">Pengaturan Download</span>
+                    <i class="fas fa-sliders-h"></i> Pengaturan Download
                 </div>
                 <div class="options-grid">
                     <div class="option-card">
                         <div class="option-icon"><i class="fas fa-folder"></i></div>
-                        <div class="option-name" data-translate="location">Lokasi Penyimpanan</div>
-                        <div class="option-desc" data-translate="location-desc">Pilih folder untuk menyimpan file yang didownload</div>
+                        <div class="option-name">Lokasi Penyimpanan</div>
+                        <div class="option-desc">Pilih folder untuk menyimpan file yang didownload</div>
                     </div>
                     <div class="option-card">
                         <div class="option-icon"><i class="fas fa-bell"></i></div>
-                        <div class="option-name" data-translate="notifications">Notifikasi</div>
-                        <div class="option-desc" data-translate="notifications-desc">Dapatkan pemberitahuan ketika download selesai</div>
+                        <div class="option-name">Notifikasi</div>
+                        <div class="option-desc">Dapatkan pemberitahuan ketika download selesai</div>
                     </div>
                     <div class="option-card">
                         <div class="option-icon"><i class="fas fa-palette"></i></div>
-                        <div class="option-name" data-translate="theme">Tema</div>
-                        <div class="option-desc" data-translate="theme-desc">Ubah tampilan aplikasi sesuai preferensi Anda</div>
+                        <div class="option-name">Tema</div>
+                        <div class="option-desc">Ubah tampilan aplikasi sesuai preferensi Anda</div>
                     </div>
                     <div class="option-card">
                         <div class="option-icon"><i class="fas fa-language"></i></div>
-                        <div class="option-name" data-translate="language">Bahasa</div>
-                        <div class="option-desc" data-translate="language-desc">Pilih bahasa yang diinginkan untuk antarmuka</div>
+                        <div class="option-name">Bahasa</div>
+                        <div class="option-desc">Pilih bahasa yang diinginkan untuk antarmuka</div>
                     </div>
                 </div>
             </div>
@@ -1738,13 +1559,13 @@ https://vt.tiktok.com/ZSdef456/"></textarea>
         <div class="tab-content" id="history-tab">
             <div class="history-section">
                 <div class="options-title">
-                    <i class="fas fa-history"></i> <span data-translate="history">Riwayat Download</span>
+                    <i class="fas fa-history"></i> Riwayat Download
                 </div>
                 <div class="history-list" id="history-list">
                     <!-- Riwayat akan dimuat di sini -->
                 </div>
                 <button class="btn" id="clear-history" style="margin-top: 20px;">
-                    <span class="btn-text" data-translate="clear-history">Hapus Riwayat</span>
+                    <span class="btn-text">Hapus Riwayat</span>
                     <span class="btn-icon"><i class="fas fa-trash"></i></span>
                 </button>
             </div>
@@ -1753,57 +1574,27 @@ https://vt.tiktok.com/ZSdef456/"></textarea>
         <div class="tab-content" id="favorites-tab">
             <div class="history-section">
                 <div class="options-title">
-                    <i class="fas fa-heart"></i> <span data-translate="favorites">Video Favorit</span>
+                    <i class="fas fa-heart"></i> Video Favorit
                 </div>
                 <div class="history-list" id="favorites-list">
                     <!-- Favorit akan dimuat di sini -->
                 </div>
                 <button class="btn" id="clear-favorites" style="margin-top: 20px;">
-                    <span class="btn-text" data-translate="clear-favorites">Hapus Semua Favorit</span>
+                    <span class="btn-text">Hapus Semua Favorit</span>
                     <span class="btn-icon"><i class="fas fa-trash"></i></span>
                 </button>
             </div>
         </div>
         
-        <div class="tab-content" id="settings-tab">
-            <div class="options-section">
-                <div class="options-title">
-                    <i class="fas fa-cog"></i> <span data-translate="settings">Pengaturan</span>
-                </div>
-                <div class="options-grid">
-                    <div class="option-card">
-                        <div class="option-icon"><i class="fas fa-language"></i></div>
-                        <div class="option-name" data-translate="language">Bahasa</div>
-                        <div class="option-desc" data-translate="language-desc">Pilih bahasa yang diinginkan untuk antarmuka</div>
-                    </div>
-                    <div class="option-card">
-                        <div class="option-icon"><i class="fas fa-palette"></i></div>
-                        <div class="option-name" data-translate="theme">Tema</div>
-                        <div class="option-desc" data-translate="theme-desc">Ubah tampilan aplikasi sesuai preferensi Anda</div>
-                    </div>
-                    <div class="option-card">
-                        <div class="option-icon"><i class="fas fa-bell"></i></div>
-                        <div class="option-name" data-translate="notifications">Notifikasi</div>
-                        <div class="option-desc" data-translate="notifications-desc">Dapatkan pemberitahuan ketika download selesai</div>
-                    </div>
-                    <div class="option-card">
-                        <div class="option-icon"><i class="fas fa-download"></i></div>
-                        <div class="option-name" data-translate="auto-download">Download Otomatis</div>
-                        <div class="option-desc" data-translate="auto-download-desc">Download otomatis setelah memilih kualitas</div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        
         <footer>
-            <p>© 2023 TikTok Downloader Premium - <span data-translate="footer">Untuk penggunaan pribadi | Dibuat dengan</span> <i class="fas fa-heart" style="color: var(--primary);"></i></p>
+            <p>© 2023 TikTok Downloader Premium - Untuk penggunaan pribadi | Dibuat dengan <i class="fas fa-heart" style="color: var(--primary);"></i></p>
         </footer>
     </div>
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             // Element references
-            const urlInput = document.getElementById('url-input');
+            const urlInput = document.querySelector('.url-input');
             const fetchBtn = document.getElementById('fetch-btn');
             const downloadBtn = document.getElementById('download-btn');
             const loading = document.getElementById('loading');
@@ -1840,11 +1631,6 @@ https://vt.tiktok.com/ZSdef456/"></textarea>
             const scheduleDownloadBtn = document.getElementById('schedule-download-btn');
             const scheduleTime = document.getElementById('schedule-time');
             const sidebarNavItems = document.querySelectorAll('.sidebar-nav-item');
-            const languageBtn = document.getElementById('language-btn');
-            const languageDropdown = document.getElementById('language-dropdown');
-            const languageOptions = document.querySelectorAll('.language-option');
-            const apiOptions = document.querySelectorAll('.api-option');
-            const downloadProcess = document.getElementById('download-process');
             
             // State variables
             let currentVideoData = null;
@@ -1858,132 +1644,6 @@ https://vt.tiktok.com/ZSdef456/"></textarea>
             let searchHistoryList = JSON.parse(localStorage.getItem('searchHistory')) || [];
             let autoDownloadEnabled = false;
             let isDarkMode = localStorage.getItem('darkMode') === 'true';
-            let currentLanguage = localStorage.getItem('language') || 'id';
-            let selectedApi = localStorage.getItem('selectedApi') || 'snaptik';
-            
-            // Language translations
-            const translations = {
-                id: {
-                    'title': 'TikTok Downloader Premium',
-                    'subtitle': 'Download video TikTok tanpa watermark, audio, dan kualitas HD dengan mudah dan cepat',
-                    'home': 'Beranda',
-                    'download': 'Download',
-                    'history': 'Riwayat',
-                    'favorites': 'Favorit',
-                    'settings': 'Pengaturan',
-                    'fetch': 'Ambil Video',
-                    'api': 'Pilih API:',
-                    'auto-download': 'Download otomatis setelah memilih kualitas',
-                    'examples': 'Contoh URL yang didukung:',
-                    'fetching': 'Mengambil data video...',
-                    'options': 'Pilih Opsi Download:',
-                    'nowm': 'Tanpa Watermark',
-                    'nowm-desc': 'Video berkualitas tinggi tanpa logo TikTok',
-                    'audio': 'Download Audio',
-                    'audio-desc': 'Ekstrak dan download hanya file audio (MP3)',
-                    'hd': 'Kualitas HD',
-                    'hd-desc': 'Video resolusi tinggi 720p / 1080p',
-                    'slideshow': 'Slideshow',
-                    'slideshow-desc': 'Download semua gambar dari slideshow',
-                    'quality': 'Pilih Kualitas:',
-                    'download-now': 'Download Sekarang',
-                    'total-downloads': 'Total Download',
-                    'success-rate': 'Tingkat Keberhasilan',
-                    'today-downloads': 'Download Hari Ini',
-                    'speed-test': 'Tes Kecepatan Download',
-                    'start-test': 'Mulai Tes Kecepatan',
-                    'features': 'Fitur Unggulan:',
-                    'fast': 'Download Cepat',
-                    'fast-desc': 'Proses download yang sangat cepat dengan teknologi terbaru',
-                    'secure': 'Aman & Privasi',
-                    'secure-desc': 'Data Anda aman dan tidak disimpan di server kami',
-                    'responsive': 'Responsif',
-                    'responsive-desc': 'Bekerja dengan baik di semua perangkat dan browser',
-                    'unlimited': 'Tanpa Batas',
-                    'unlimited-desc': 'Download sebanyak yang Anda mau tanpa batasan',
-                    'batch': 'Download Batch',
-                    'batch-info': 'Masukkan beberapa URL TikTok (satu URL per baris) untuk mendownload banyak video sekaligus',
-                    'download-all': 'Download Semua',
-                    'scheduler': 'Penjadwalan Download',
-                    'scheduler-info': 'Jadwalkan download untuk waktu tertentu',
-                    'schedule': 'Jadwalkan Download',
-                    'location': 'Lokasi Penyimpanan',
-                    'location-desc': 'Pilih folder untuk menyimpan file yang didownload',
-                    'notifications': 'Notifikasi',
-                    'notifications-desc': 'Dapatkan pemberitahuan ketika download selesai',
-                    'theme': 'Tema',
-                    'theme-desc': 'Ubah tampilan aplikasi sesuai preferensi Anda',
-                    'language': 'Bahasa',
-                    'language-desc': 'Pilih bahasa yang diinginkan untuk antarmuka',
-                    'clear-history': 'Hapus Riwayat',
-                    'clear-favorites': 'Hapus Semua Favorit',
-                    'footer': 'Untuk penggunaan pribadi | Dibuat dengan',
-                    'step1': 'URL divalidasi',
-                    'step2': 'Mengambil data video',
-                    'step3': 'Mempersiapkan download',
-                    'step4': 'Download selesai'
-                },
-                en: {
-                    'title': 'TikTok Downloader Premium',
-                    'subtitle': 'Download TikTok videos without watermark, audio, and HD quality easily and quickly',
-                    'home': 'Home',
-                    'download': 'Download',
-                    'history': 'History',
-                    'favorites': 'Favorites',
-                    'settings': 'Settings',
-                    'fetch': 'Fetch Video',
-                    'api': 'Select API:',
-                    'auto-download': 'Auto download after selecting quality',
-                    'examples': 'Supported URL examples:',
-                    'fetching': 'Fetching video data...',
-                    'options': 'Select Download Options:',
-                    'nowm': 'Without Watermark',
-                    'nowm-desc': 'High quality video without TikTok logo',
-                    'audio': 'Download Audio',
-                    'audio-desc': 'Extract and download only audio file (MP3)',
-                    'hd': 'HD Quality',
-                    'hd-desc': 'High resolution video 720p / 1080p',
-                    'slideshow': 'Slideshow',
-                    'slideshow-desc': 'Download all images from slideshow',
-                    'quality': 'Select Quality:',
-                    'download-now': 'Download Now',
-                    'total-downloads': 'Total Downloads',
-                    'success-rate': 'Success Rate',
-                    'today-downloads': 'Today Downloads',
-                    'speed-test': 'Download Speed Test',
-                    'start-test': 'Start Speed Test',
-                    'features': 'Key Features:',
-                    'fast': 'Fast Download',
-                    'fast-desc': 'Very fast download process with latest technology',
-                    'secure': 'Safe & Private',
-                    'secure-desc': 'Your data is safe and not stored on our servers',
-                    'responsive': 'Responsive',
-                    'responsive-desc': 'Works well on all devices and browsers',
-                    'unlimited': 'Unlimited',
-                    'unlimited-desc': 'Download as much as you want without limits',
-                    'batch': 'Batch Download',
-                    'batch-info': 'Enter multiple TikTok URLs (one URL per line) to download many videos at once',
-                    'download-all': 'Download All',
-                    'scheduler': 'Download Scheduler',
-                    'scheduler-info': 'Schedule download for a specific time',
-                    'schedule': 'Schedule Download',
-                    'location': 'Storage Location',
-                    'location-desc': 'Choose folder to save downloaded files',
-                    'notifications': 'Notifications',
-                    'notifications-desc': 'Get notifications when download is complete',
-                    'theme': 'Theme',
-                    'theme-desc': 'Change app appearance according to your preference',
-                    'language': 'Language',
-                    'language-desc': 'Choose preferred language for interface',
-                    'clear-history': 'Clear History',
-                    'clear-favorites': 'Clear All Favorites',
-                    'footer': 'For personal use | Made with',
-                    'step1': 'URL validated',
-                    'step2': 'Fetching video data',
-                    'step3': 'Preparing download',
-                    'step4': 'Download completed'
-                }
-            };
             
             // Initialize
             initApp();
@@ -1996,8 +1656,6 @@ https://vt.tiktok.com/ZSdef456/"></textarea>
                 setupEventListeners();
                 checkTodayReset();
                 applyDarkMode();
-                applyLanguage();
-                applyApiSelection();
                 
                 // Auto-focus pada input URL
                 urlInput.focus();
@@ -2033,29 +1691,6 @@ https://vt.tiktok.com/ZSdef456/"></textarea>
                 closeSidebar.addEventListener('click', closeMobileSidebar);
                 overlay.addEventListener('click', closeMobileSidebar);
                 
-                // Language selector
-                languageBtn.addEventListener('click', function() {
-                    languageDropdown.classList.toggle('active');
-                });
-                
-                languageOptions.forEach(option => {
-                    option.addEventListener('click', function() {
-                        const lang = this.getAttribute('data-lang');
-                        changeLanguage(lang);
-                        languageDropdown.classList.remove('active');
-                    });
-                });
-                
-                // API selector
-                apiOptions.forEach(option => {
-                    option.addEventListener('click', function() {
-                        apiOptions.forEach(opt => opt.classList.remove('active'));
-                        this.classList.add('active');
-                        selectedApi = this.getAttribute('data-api');
-                        localStorage.setItem('selectedApi', selectedApi);
-                    });
-                });
-                
                 // Download options
                 optionCards.forEach(card => {
                     card.addEventListener('click', function() {
@@ -2066,13 +1701,6 @@ https://vt.tiktok.com/ZSdef456/"></textarea>
                         if (currentVideoData) {
                             updateDownloadButton();
                             showAvailableQualities();
-                            
-                            // Auto download jika diaktifkan
-                            if (autoDownloadEnabled) {
-                                setTimeout(() => {
-                                    downloadVideo();
-                                }, 500);
-                            }
                         }
                     });
                 });
@@ -2185,11 +1813,6 @@ https://vt.tiktok.com/ZSdef456/"></textarea>
                     if (!urlInput.contains(e.target) && !searchHistory.contains(e.target)) {
                         searchHistory.style.display = 'none';
                     }
-                    
-                    // Close language dropdown when clicking outside
-                    if (!languageBtn.contains(e.target) && !languageDropdown.contains(e.target)) {
-                        languageDropdown.classList.remove('active');
-                    }
                 });
             }
             
@@ -2248,58 +1871,6 @@ https://vt.tiktok.com/ZSdef456/"></textarea>
                 } else {
                     document.body.classList.remove('dark-mode');
                 }
-            }
-            
-            // Language functions
-            function changeLanguage(lang) {
-                currentLanguage = lang;
-                localStorage.setItem('language', lang);
-                applyLanguage();
-                
-                // Update language button
-                languageBtn.innerHTML = `<i class="fas fa-globe"></i> ${lang.toUpperCase()} <i class="fas fa-chevron-down"></i>`;
-                
-                // Update active language option
-                languageOptions.forEach(option => {
-                    if (option.getAttribute('data-lang') === lang) {
-                        option.classList.add('active');
-                    } else {
-                        option.classList.remove('active');
-                    }
-                });
-                
-                showNotification('info', 'Bahasa', `Bahasa diubah ke ${getLanguageName(lang)}`);
-            }
-            
-            function applyLanguage() {
-                const elements = document.querySelectorAll('[data-translate]');
-                elements.forEach(element => {
-                    const key = element.getAttribute('data-translate');
-                    if (translations[currentLanguage] && translations[currentLanguage][key]) {
-                        element.textContent = translations[currentLanguage][key];
-                    }
-                });
-            }
-            
-            function getLanguageName(code) {
-                const names = {
-                    'id': 'Indonesia',
-                    'en': 'English',
-                    'es': 'Español',
-                    'fr': 'Français'
-                };
-                return names[code] || code;
-            }
-            
-            // API functions
-            function applyApiSelection() {
-                apiOptions.forEach(option => {
-                    if (option.getAttribute('data-api') === selectedApi) {
-                        option.classList.add('active');
-                    } else {
-                        option.classList.remove('active');
-                    }
-                });
             }
             
             // Notification system
@@ -2533,78 +2104,29 @@ https://vt.tiktok.com/ZSdef456/"></textarea>
                 hideError();
                 hideSuccess();
                 hideResult();
-                showDownloadProcess();
                 
                 try {
-                    let apiUrl;
-                    
-                    // Pilih API berdasarkan pilihan pengguna
-                    switch(selectedApi) {
-                        case 'snaptik':
-                            apiUrl = `https://snaptik.app/action.php?url=${encodeURIComponent(url)}`;
-                            break;
-                        case 'tikwm':
-                            apiUrl = `https://www.tikwm.com/api/?url=${encodeURIComponent(url)}`;
-                            break;
-                        case 'musicallydown':
-                            apiUrl = `https://musicallydown.com/?url=${encodeURIComponent(url)}`;
-                            break;
-                        default:
-                            apiUrl = `https://snaptik.app/action.php?url=${encodeURIComponent(url)}`;
-                    }
+                    // Menggunakan API TikTok downloader yang berbeda untuk variasi
+                    const apiUrl = `https://api.tiktokvideosaver.com/video?url=${encodeURIComponent(url)}`;
                     
                     const response = await fetch(apiUrl);
                     const data = await response.json();
                     
-                    if ((selectedApi === 'snaptik' && data.status) || 
-                        (selectedApi === 'tikwm' && data.code === 0) || 
-                        (selectedApi === 'musicallydown' && data.success)) {
-                        
-                        // Proses data berdasarkan API yang dipilih
-                        if (selectedApi === 'snaptik') {
-                            currentVideoData = {
-                                id: data.data.id || 'unknown',
-                                title: data.data.title || 'Video TikTok',
-                                author: data.data.author || '@user_tiktok',
-                                duration: data.data.duration || '0 detik',
-                                likes: formatNumber(data.data.likes) || '0',
-                                views: formatNumber(data.data.views) || '0',
-                                thumbnail: data.data.thumbnail || 'https://via.placeholder.com/350x450/ff0050/ffffff?text=TikTok+Preview',
-                                nowatermark: data.data.nowatermark || data.data.download_url || '',
-                                audio: data.data.music || data.data.audio || '',
-                                hd: data.data.hd || data.data.hd_url || data.data.nowatermark || ''
-                            };
-                        } else if (selectedApi === 'tikwm') {
-                            currentVideoData = {
-                                id: data.data.id || 'unknown',
-                                title: data.data.title || 'Video TikTok',
-                                author: data.data.author?.unique_id || '@user_tiktok',
-                                duration: data.data.duration || '0 detik',
-                                likes: formatNumber(data.data.digg_count) || '0',
-                                views: formatNumber(data.data.play_count) || '0',
-                                thumbnail: data.data.cover || 'https://via.placeholder.com/350x450/ff0050/ffffff?text=TikTok+Preview',
-                                nowatermark: data.data.play || data.data.wmplay || '',
-                                audio: data.data.music || data.data.music_info?.play_url || '',
-                                hd: data.data.hdplay || data.data.play || ''
-                            };
-                        } else if (selectedApi === 'musicallydown') {
-                            currentVideoData = {
-                                id: data.data.id || 'unknown',
-                                title: data.data.title || 'Video TikTok',
-                                author: data.data.author || '@user_tiktok',
-                                duration: data.data.duration || '0 detik',
-                                likes: formatNumber(data.data.likes) || '0',
-                                views: formatNumber(data.data.views) || '0',
-                                thumbnail: data.data.thumbnail || 'https://via.placeholder.com/350x450/ff0050/ffffff?text=TikTok+Preview',
-                                nowatermark: data.data.video_url || data.data.download_url || '',
-                                audio: data.data.audio_url || '',
-                                hd: data.data.hd_url || data.data.video_url || ''
-                            };
-                        }
+                    if (data.success && data.data) {
+                        currentVideoData = {
+                            id: data.data.id || 'unknown',
+                            title: data.data.title || 'Video TikTok',
+                            author: data.data.author || '@user_tiktok',
+                            duration: data.data.duration || '0 detik',
+                            likes: formatNumber(data.data.likes) || '0',
+                            views: formatNumber(data.data.views) || '0',
+                            thumbnail: data.data.thumbnail || 'https://via.placeholder.com/350x450/ff0050/ffffff?text=TikTok+Preview',
+                            nowatermark: data.data.download_url || '',
+                            audio: data.data.music || '',
+                            hd: data.data.hd_url || data.data.download_url || ''
+                        };
                         
                         hideLoading();
-                        updateDownloadProcess(2, true);
-                        updateDownloadProcess(3, false);
                         displayVideoData(currentVideoData);
                         
                         // Jika auto download diaktifkan
@@ -2618,10 +2140,45 @@ https://vt.tiktok.com/ZSdef456/"></textarea>
                     }
                 } catch (error) {
                     console.error('Error:', error);
-                    hideLoading();
-                    hideDownloadProcess();
-                    showError('Gagal mengambil data video. Silakan coba lagi atau gunakan URL yang berbeda.');
-                    showNotification('error', 'Error', 'Gagal mengambil data video');
+                    
+                    // Fallback ke API lain jika yang pertama gagal
+                    try {
+                        const fallbackApiUrl = `https://www.tikwm.com/api/?url=${encodeURIComponent(url)}`;
+                        const fallbackResponse = await fetch(fallbackApiUrl);
+                        const fallbackData = await fallbackResponse.json();
+                        
+                        if (fallbackData.code === 0 && fallbackData.data) {
+                            currentVideoData = {
+                                id: fallbackData.data.id || 'unknown',
+                                title: fallbackData.data.title || 'Video TikTok',
+                                author: fallbackData.data.author?.unique_id || '@user_tiktok',
+                                duration: fallbackData.data.duration || '0 detik',
+                                likes: formatNumber(fallbackData.data.digg_count) || '0',
+                                views: formatNumber(fallbackData.data.play_count) || '0',
+                                thumbnail: fallbackData.data.cover || 'https://via.placeholder.com/350x450/ff0050/ffffff?text=TikTok+Preview',
+                                nowatermark: fallbackData.data.play || fallbackData.data.wmplay || '',
+                                audio: fallbackData.data.music || fallbackData.data.music_info?.play_url || '',
+                                hd: fallbackData.data.hdplay || fallbackData.data.play || ''
+                            };
+                            
+                            hideLoading();
+                            displayVideoData(currentVideoData);
+                            
+                            // Jika auto download diaktifkan
+                            if (autoDownloadEnabled) {
+                                setTimeout(() => {
+                                    downloadVideo();
+                                }, 1000);
+                            }
+                        } else {
+                            throw new Error('Gagal mengambil data video');
+                        }
+                    } catch (fallbackError) {
+                        console.error('Fallback Error:', fallbackError);
+                        hideLoading();
+                        showError('Gagal mengambil data video. Silakan coba lagi atau gunakan URL yang berbeda.');
+                        showNotification('error', 'Error', 'Gagal mengambil data video');
+                    }
                 }
             }
             
@@ -2693,13 +2250,6 @@ https://vt.tiktok.com/ZSdef456/"></textarea>
                             this.classList.add('active');
                             selectedQuality = quality.id;
                             updateDownloadButton();
-                            
-                            // Auto download jika diaktifkan
-                            if (autoDownloadEnabled) {
-                                setTimeout(() => {
-                                    downloadVideo();
-                                }, 500);
-                            }
                         });
                     }
                     
@@ -2737,9 +2287,6 @@ https://vt.tiktok.com/ZSdef456/"></textarea>
                 
                 const downloadUrl = getDownloadUrl(selectedOption, selectedQuality);
                 if (downloadUrl) {
-                    // Update process
-                    updateDownloadProcess(3, true);
-                    
                     // Simulasi progress bar
                     progressBar.style.display = 'block';
                     let progress = 0;
@@ -2770,9 +2317,6 @@ https://vt.tiktok.com/ZSdef456/"></textarea>
                             // Tambahkan ke riwayat
                             addToHistory(currentVideoData, selectedOption);
                             
-                            // Update process
-                            updateDownloadProcess(4, true);
-                            
                             // Tampilkan notifikasi sukses
                             showNotification('success', 'Download Berhasil', 'Video berhasil didownload');
                             
@@ -2780,7 +2324,6 @@ https://vt.tiktok.com/ZSdef456/"></textarea>
                             setTimeout(() => {
                                 progressBar.style.display = 'none';
                                 downloadProgress.style.width = '0%';
-                                hideDownloadProcess();
                             }, 1000);
                         }
                         downloadProgress.style.width = `${progress}%`;
@@ -2932,44 +2475,6 @@ https://vt.tiktok.com/ZSdef456/"></textarea>
                     localStorage.setItem('lastResetDate', today);
                     updateStats();
                 }
-            }
-            
-            // Download process functions
-            function showDownloadProcess() {
-                downloadProcess.style.display = 'block';
-                
-                // Reset all steps
-                const steps = downloadProcess.querySelectorAll('.step-icon');
-                steps.forEach((step, index) => {
-                    if (index === 0) {
-                        step.classList.add('completed');
-                    } else {
-                        step.classList.remove('active', 'completed');
-                    }
-                });
-            }
-            
-            function updateDownloadProcess(stepNumber, completed) {
-                const steps = downloadProcess.querySelectorAll('.step-icon');
-                if (stepNumber - 1 < steps.length) {
-                    const step = steps[stepNumber - 1];
-                    
-                    if (completed) {
-                        step.classList.remove('active');
-                        step.classList.add('completed');
-                        
-                        // Activate next step if exists
-                        if (stepNumber < steps.length) {
-                            steps[stepNumber].classList.add('active');
-                        }
-                    } else {
-                        step.classList.add('active');
-                    }
-                }
-            }
-            
-            function hideDownloadProcess() {
-                downloadProcess.style.display = 'none';
             }
             
             // Tampilkan loading
