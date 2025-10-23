@@ -6,7 +6,6 @@
     <title>TikTok Downloader Premium - Tanpa Watermark</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        /* CSS yang sama seperti sebelumnya, dengan sedikit penyesuaian */
         * {
             margin: 0;
             padding: 0;
@@ -707,7 +706,7 @@
             display: none;
             position: fixed;
             top: 20px;
-            left: 20px;
+            right: 20px;
             z-index: 1001;
             background: var(--primary);
             color: white;
@@ -728,20 +727,20 @@
         .sidebar {
             position: fixed;
             top: 0;
-            left: -100%;
+            right: -100%;
             width: var(--sidebar-width);
             height: 100%;
             background: white;
             z-index: 1000;
             transition: all 0.4s ease;
-            box-shadow: 5px 0 15px rgba(0, 0, 0, 0.1);
+            box-shadow: -5px 0 15px rgba(0, 0, 0, 0.1);
             overflow-y: auto;
             padding: 20px;
         }
         
         .sidebar.active {
-            left: 0;
-            animation: slideInRight 0.4s ease;
+            right: 0;
+            animation: slideInLeft 0.4s ease;
         }
         
         .sidebar-header {
@@ -793,7 +792,7 @@
         .sidebar-nav-item:hover {
             background: rgba(255, 0, 80, 0.1);
             color: var(--primary);
-            transform: translateX(5px);
+            transform: translateX(-5px);
         }
         
         .sidebar-nav-item.active {
@@ -1216,6 +1215,95 @@
             margin-bottom: 15px;
         }
         
+        /* SETTINGS STYLES */
+        .settings-section {
+            margin-top: 30px;
+        }
+        
+        .settings-group {
+            margin-bottom: 30px;
+            padding: 20px;
+            background: var(--gray);
+            border-radius: 15px;
+        }
+        
+        .settings-title {
+            font-size: 18px;
+            margin-bottom: 15px;
+            color: #333;
+            font-weight: 600;
+        }
+        
+        .settings-option {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 0;
+            border-bottom: 1px solid #ddd;
+        }
+        
+        .settings-option:last-child {
+            border-bottom: none;
+        }
+        
+        .settings-label {
+            font-weight: 500;
+        }
+        
+        .settings-value {
+            color: #666;
+        }
+        
+        .settings-select {
+            padding: 8px 12px;
+            border-radius: 8px;
+            border: 1px solid #ddd;
+            background: white;
+        }
+        
+        .settings-checkbox {
+            width: 20px;
+            height: 20px;
+        }
+        
+        /* HELP STYLES */
+        .help-section {
+            margin-top: 30px;
+        }
+        
+        .help-category {
+            margin-bottom: 30px;
+            padding: 20px;
+            background: var(--gray);
+            border-radius: 15px;
+        }
+        
+        .help-title {
+            font-size: 18px;
+            margin-bottom: 15px;
+            color: #333;
+            font-weight: 600;
+        }
+        
+        .help-item {
+            margin-bottom: 15px;
+            padding: 15px;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.05);
+        }
+        
+        .help-question {
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: #333;
+        }
+        
+        .help-answer {
+            color: #666;
+            line-height: 1.5;
+        }
+        
         @media (max-width: 768px) {
             body {
                 padding: 10px;
@@ -1283,7 +1371,7 @@
 <body>
     <!-- Mobile Menu Button -->
     <button class="mobile-menu-btn" id="mobile-menu-btn">
-        <i class="fas fa-bars"></i>
+        <i class="fas fa-ellipsis-v"></i>
     </button>
     
     <!-- Mobile Sidebar -->
@@ -1311,6 +1399,9 @@
             </div>
             <div class="sidebar-nav-item" data-tab="settings">
                 <i class="fas fa-cog"></i> Pengaturan
+            </div>
+            <div class="sidebar-nav-item" data-tab="help">
+                <i class="fas fa-question-circle"></i> Bantuan
             </div>
         </div>
         <div class="sidebar-footer">
@@ -1349,18 +1440,24 @@
             <div class="nav-tab" data-tab="favorites">
                 <i class="fas fa-heart"></i> Favorit
             </div>
+            <div class="nav-tab" data-tab="settings">
+                <i class="fas fa-cog"></i> Pengaturan
+            </div>
+            <div class="nav-tab" data-tab="help">
+                <i class="fas fa-question-circle"></i> Bantuan
+            </div>
         </div>
         
         <div class="tab-content active" id="home-tab">
             <div class="input-section">
-                <input type="text" class="url-input" placeholder="Tempel URL video TikTok di sini..." id="url-input">
+                <input type="text" class="url-input" placeholder="Tempel URL video TikTok di sini..." value="https://vm.tiktok.com/ZSHvA3XWq/">
                 <button class="btn" id="fetch-btn">
                     <span class="btn-text">Ambil Video</span>
                     <span class="btn-icon"><i class="fas fa-search"></i></span>
                 </button>
                 
                 <div class="auto-download-option">
-                    <input type="checkbox" id="auto-download" checked>
+                    <input type="checkbox" id="auto-download">
                     <label for="auto-download">Download otomatis setelah mengambil data video</label>
                 </div>
                 
@@ -1527,34 +1624,6 @@ https://vt.tiktok.com/ZSdef456/"></textarea>
                     <span class="btn-icon"><i class="fas fa-calendar-plus"></i></span>
                 </button>
             </div>
-            
-            <div class="options-section">
-                <div class="options-title">
-                    <i class="fas fa-sliders-h"></i> Pengaturan Download
-                </div>
-                <div class="options-grid">
-                    <div class="option-card">
-                        <div class="option-icon"><i class="fas fa-folder"></i></div>
-                        <div class="option-name">Lokasi Penyimpanan</div>
-                        <div class="option-desc">Pilih folder untuk menyimpan file yang didownload</div>
-                    </div>
-                    <div class="option-card">
-                        <div class="option-icon"><i class="fas fa-bell"></i></div>
-                        <div class="option-name">Notifikasi</div>
-                        <div class="option-desc">Dapatkan pemberitahuan ketika download selesai</div>
-                    </div>
-                    <div class="option-card">
-                        <div class="option-icon"><i class="fas fa-palette"></i></div>
-                        <div class="option-name">Tema</div>
-                        <div class="option-desc">Ubah tampilan aplikasi sesuai preferensi Anda</div>
-                    </div>
-                    <div class="option-card">
-                        <div class="option-icon"><i class="fas fa-language"></i></div>
-                        <div class="option-name">Bahasa</div>
-                        <div class="option-desc">Pilih bahasa yang diinginkan untuk antarmuka</div>
-                    </div>
-                </div>
-            </div>
         </div>
         
         <div class="tab-content" id="history-tab">
@@ -1587,6 +1656,208 @@ https://vt.tiktok.com/ZSdef456/"></textarea>
             </div>
         </div>
         
+        <div class="tab-content" id="settings-tab">
+            <div class="settings-section">
+                <div class="options-title">
+                    <i class="fas fa-cog"></i> Pengaturan
+                </div>
+                
+                <div class="settings-group">
+                    <div class="settings-title">Umum</div>
+                    <div class="settings-option">
+                        <div class="settings-label">Bahasa</div>
+                        <select class="settings-select" id="language-select">
+                            <option value="id">Bahasa Indonesia</option>
+                            <option value="en">English</option>
+                            <option value="ms">Bahasa Melayu</option>
+                        </select>
+                    </div>
+                    <div class="settings-option">
+                        <div class="settings-label">Mode Gelap</div>
+                        <input type="checkbox" class="settings-checkbox" id="dark-mode-setting">
+                    </div>
+                    <div class="settings-option">
+                        <div class="settings-label">Notifikasi</div>
+                        <input type="checkbox" class="settings-checkbox" id="notification-setting" checked>
+                    </div>
+                </div>
+                
+                <div class="settings-group">
+                    <div class="settings-title">Download</div>
+                    <div class="settings-option">
+                        <div class="settings-label">Format Default</div>
+                        <select class="settings-select" id="format-select">
+                            <option value="mp4">MP4 (Video)</option>
+                            <option value="mp3">MP3 (Audio)</option>
+                        </select>
+                    </div>
+                    <div class="settings-option">
+                        <div class="settings-label">Kualitas Default</div>
+                        <select class="settings-select" id="quality-select">
+                            <option value="normal">Normal</option>
+                            <option value="hd">HD</option>
+                            <option value="fhd">Full HD</option>
+                        </select>
+                    </div>
+                    <div class="settings-option">
+                        <div class="settings-label">Download Otomatis</div>
+                        <input type="checkbox" class="settings-checkbox" id="auto-download-setting">
+                    </div>
+                </div>
+                
+                <div class="settings-group">
+                    <div class="settings-title">Penyimpanan</div>
+                    <div class="settings-option">
+                        <div class="settings-label">Lokasi Penyimpanan</div>
+                        <button class="btn btn-secondary" id="storage-location-btn">
+                            <span class="btn-text">Pilih Folder</span>
+                        </button>
+                    </div>
+                    <div class="settings-option">
+                        <div class="settings-label">Hapus Cache</div>
+                        <button class="btn" id="clear-cache-btn">
+                            <span class="btn-text">Hapus Sekarang</span>
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="settings-group">
+                    <div class="settings-title">Privasi & Keamanan</div>
+                    <div class="settings-option">
+                        <div class="settings-label">Syarat & Ketentuan</div>
+                        <button class="btn" id="terms-btn">
+                            <span class="btn-text">Baca</span>
+                        </button>
+                    </div>
+                    <div class="settings-option">
+                        <div class="settings-label">Kebijakan Privasi</div>
+                        <button class="btn" id="privacy-btn">
+                            <span class="btn-text">Baca</span>
+                        </button>
+                    </div>
+                    <div class="settings-option">
+                        <div class="settings-label">Hapus Semua Data</div>
+                        <button class="btn" id="reset-data-btn">
+                            <span class="btn-text">Reset</span>
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="settings-group">
+                    <div class="settings-title">Tentang</div>
+                    <div class="settings-option">
+                        <div class="settings-label">Versi Aplikasi</div>
+                        <div class="settings-value">v2.1.0</div>
+                    </div>
+                    <div class="settings-option">
+                        <div class="settings-label">Pembaruan Terakhir</div>
+                        <div class="settings-value">15 Oktober 2023</div>
+                    </div>
+                    <div class="settings-option">
+                        <div class="settings-label">Kontak Developer</div>
+                        <button class="btn" id="contact-btn">
+                            <span class="btn-text">Hubungi</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="tab-content" id="help-tab">
+            <div class="help-section">
+                <div class="options-title">
+                    <i class="fas fa-question-circle"></i> Bantuan & Panduan
+                </div>
+                
+                <div class="help-category">
+                    <div class="help-title">Cara Menggunakan</div>
+                    <div class="help-item">
+                        <div class="help-question">Bagaimana cara mendownload video TikTok?</div>
+                        <div class="help-answer">
+                            <ol>
+                                <li>Salin URL video TikTok dari aplikasi TikTok</li>
+                                <li>Tempel URL di kolom input pada halaman beranda</li>
+                                <li>Klik tombol "Ambil Video" untuk memproses video</li>
+                                <li>Pilih opsi download yang diinginkan</li>
+                                <li>Klik tombol "Download Sekarang" untuk mengunduh video</li>
+                            </ol>
+                        </div>
+                    </div>
+                    <div class="help-item">
+                        <div class="help-question">Format apa saja yang didukung?</div>
+                        <div class="help-answer">
+                            Aplikasi ini mendownload video dalam format MP4 dan audio dalam format MP3. Anda dapat memilih opsi download sesuai kebutuhan.
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="help-category">
+                    <div class="help-title">Fitur Unggulan</div>
+                    <div class="help-item">
+                        <div class="help-question">Apa itu Download Tanpa Watermark?</div>
+                        <div class="help-answer">
+                            Fitur ini memungkinkan Anda mendownload video TikTok tanpa logo TikTok di sudut video, sehingga video terlihat lebih bersih dan profesional.
+                        </div>
+                    </div>
+                    <div class="help-item">
+                        <div class="help-question">Bagaimana cara menggunakan Download Batch?</div>
+                        <div class="help-answer">
+                            Di tab Download, Anda dapat memasukkan beberapa URL TikTok sekaligus (satu URL per baris) dan mendownload semuanya dalam satu proses.
+                        </div>
+                    </div>
+                    <div class="help-item">
+                        <div class="help-question">Apa fungsi Tes Kecepatan Download?</div>
+                        <div class="help-answer">
+                            Fitur ini mengukur kecepatan koneksi internet Anda untuk memberikan estimasi waktu download yang lebih akurat.
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="help-category">
+                    <div class="help-title">Pemecahan Masalah</div>
+                    <div class="help-item">
+                        <div class="help-question">Video gagal didownload, apa yang harus dilakukan?</div>
+                        <div class="help-answer">
+                            <ul>
+                                <li>Pastikan URL TikTok yang dimasukkan valid</li>
+                                <li>Periksa koneksi internet Anda</li>
+                                <li>Coba refresh halaman dan ulangi proses</li>
+                                <li>Gunakan URL dari video TikTok yang berbeda</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="help-item">
+                        <div class="help-question">Mengapa video tidak bisa diputar setelah didownload?</div>
+                        <div class="help-answer">
+                            Pastikan Anda menggunakan pemutar video yang mendukung format MP4. Jika masalah berlanjut, coba download ulang video tersebut.
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="help-category">
+                    <div class="help-title">Pertanyaan Umum</div>
+                    <div class="help-item">
+                        <div class="help-question">Apakah aplikasi ini gratis?</div>
+                        <div class="help-answer">
+                            Ya, aplikasi ini sepenuhnya gratis tanpa biaya tersembunyi.
+                        </div>
+                    </div>
+                    <div class="help-item">
+                        <div class="help-question">Apakah data saya aman?</div>
+                        <div class="help-answer">
+                            Ya, kami tidak menyimpan data pribadi atau riwayat download Anda di server kami.
+                        </div>
+                    </div>
+                    <div class="help-item">
+                        <div class="help-question">Apakah ada batasan download?</div>
+                        <div class="help-answer">
+                            Tidak, Anda dapat mendownload sebanyak yang Anda inginkan tanpa batasan.
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
         <footer>
             <p>© 2023 TikTok Downloader Premium - Untuk penggunaan pribadi | Dibuat dengan <i class="fas fa-heart" style="color: var(--primary);"></i></p>
         </footer>
@@ -1595,7 +1866,7 @@ https://vt.tiktok.com/ZSdef456/"></textarea>
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             // Element references
-            const urlInput = document.getElementById('url-input');
+            const urlInput = document.querySelector('.url-input');
             const fetchBtn = document.getElementById('fetch-btn');
             const downloadBtn = document.getElementById('download-btn');
             const loading = document.getElementById('loading');
@@ -1633,6 +1904,20 @@ https://vt.tiktok.com/ZSdef456/"></textarea>
             const scheduleTime = document.getElementById('schedule-time');
             const sidebarNavItems = document.querySelectorAll('.sidebar-nav-item');
             
+            // Settings elements
+            const languageSelect = document.getElementById('language-select');
+            const darkModeSetting = document.getElementById('dark-mode-setting');
+            const notificationSetting = document.getElementById('notification-setting');
+            const formatSelect = document.getElementById('format-select');
+            const qualitySelect = document.getElementById('quality-select');
+            const autoDownloadSetting = document.getElementById('auto-download-setting');
+            const storageLocationBtn = document.getElementById('storage-location-btn');
+            const clearCacheBtn = document.getElementById('clear-cache-btn');
+            const termsBtn = document.getElementById('terms-btn');
+            const privacyBtn = document.getElementById('privacy-btn');
+            const resetDataBtn = document.getElementById('reset-data-btn');
+            const contactBtn = document.getElementById('contact-btn');
+            
             // State variables
             let currentVideoData = null;
             let selectedOption = 'nowm';
@@ -1643,7 +1928,7 @@ https://vt.tiktok.com/ZSdef456/"></textarea>
             let downloadHistory = JSON.parse(localStorage.getItem('downloadHistory')) || [];
             let favorites = JSON.parse(localStorage.getItem('favorites')) || [];
             let searchHistoryList = JSON.parse(localStorage.getItem('searchHistory')) || [];
-            let autoDownloadEnabled = true; // Default enabled
+            let autoDownloadEnabled = false;
             let isDarkMode = localStorage.getItem('darkMode') === 'true';
             
             // Initialize
@@ -1657,6 +1942,7 @@ https://vt.tiktok.com/ZSdef456/"></textarea>
                 setupEventListeners();
                 checkTodayReset();
                 applyDarkMode();
+                loadSettings();
                 
                 // Auto-focus pada input URL
                 urlInput.focus();
@@ -1816,32 +2102,85 @@ https://vt.tiktok.com/ZSdef456/"></textarea>
                     }
                 });
                 
-                // Auto process when URL is pasted
-                urlInput.addEventListener('paste', function(e) {
-                    setTimeout(() => {
-                        const url = urlInput.value.trim();
-                        if (isValidTikTokUrl(url)) {
-                            // Clean TikTok Lite URL
-                            const cleanedUrl = cleanTikTokLiteUrl(url);
-                            if (cleanedUrl !== url) {
-                                urlInput.value = cleanedUrl;
-                                showNotification('info', 'URL Dibersihkan', 'URL TikTok Lite telah dibersihkan');
-                            }
-                            
-                            // Auto fetch after paste
-                            fetchBtn.click();
-                        }
-                    }, 100);
+                // Settings event listeners
+                languageSelect.addEventListener('change', saveSettings);
+                darkModeSetting.addEventListener('change', saveSettings);
+                notificationSetting.addEventListener('change', saveSettings);
+                formatSelect.addEventListener('change', saveSettings);
+                qualitySelect.addEventListener('change', saveSettings);
+                autoDownloadSetting.addEventListener('change', saveSettings);
+                
+                storageLocationBtn.addEventListener('click', function() {
+                    showNotification('info', 'Penyimpanan', 'Fitur ini hanya tersedia di aplikasi desktop');
+                });
+                
+                clearCacheBtn.addEventListener('click', function() {
+                    if (confirm('Apakah Anda yakin ingin menghapus cache?')) {
+                        localStorage.removeItem('searchHistory');
+                        localStorage.removeItem('downloadHistory');
+                        searchHistoryList = [];
+                        downloadHistory = [];
+                        loadSearchHistory();
+                        loadDownloadHistory();
+                        showNotification('success', 'Berhasil', 'Cache berhasil dihapus');
+                    }
+                });
+                
+                termsBtn.addEventListener('click', function() {
+                    showNotification('info', 'Syarat & Ketentuan', 'Membuka halaman syarat dan ketentuan');
+                });
+                
+                privacyBtn.addEventListener('click', function() {
+                    showNotification('info', 'Kebijakan Privasi', 'Membuka halaman kebijakan privasi');
+                });
+                
+                resetDataBtn.addEventListener('click', function() {
+                    if (confirm('Apakah Anda yakin ingin menghapus semua data? Tindakan ini tidak dapat dibatalkan.')) {
+                        localStorage.clear();
+                        location.reload();
+                    }
+                });
+                
+                contactBtn.addEventListener('click', function() {
+                    showNotification('info', 'Kontak', 'Mengirim email ke developer');
                 });
             }
             
-            // Clean TikTok Lite URL
-            function cleanTikTokLiteUrl(url) {
-                // Remove TikTok Lite text and additional parameters
-                return url.replace(/Postingan ini dibagikan via TikTok Lite.*$/, '')
-                         .replace(/Unduh TikTok Lite.*$/, '')
-                         .replace(/\s+/g, '')
-                         .trim();
+            // Load settings from localStorage
+            function loadSettings() {
+                const settings = JSON.parse(localStorage.getItem('appSettings')) || {};
+                
+                if (settings.language) languageSelect.value = settings.language;
+                if (settings.darkMode !== undefined) darkModeSetting.checked = settings.darkMode;
+                if (settings.notifications !== undefined) notificationSetting.checked = settings.notifications;
+                if (settings.format) formatSelect.value = settings.format;
+                if (settings.quality) qualitySelect.value = settings.quality;
+                if (settings.autoDownload !== undefined) autoDownloadSetting.checked = settings.autoDownload;
+                
+                // Apply settings
+                if (settings.darkMode) {
+                    toggleDarkMode();
+                }
+            }
+            
+            // Save settings to localStorage
+            function saveSettings() {
+                const settings = {
+                    language: languageSelect.value,
+                    darkMode: darkModeSetting.checked,
+                    notifications: notificationSetting.checked,
+                    format: formatSelect.value,
+                    quality: qualitySelect.value,
+                    autoDownload: autoDownloadSetting.checked
+                };
+                
+                localStorage.setItem('appSettings', JSON.stringify(settings));
+                showNotification('success', 'Pengaturan', 'Pengaturan berhasil disimpan');
+                
+                // Apply dark mode if changed
+                if (settings.darkMode !== isDarkMode) {
+                    toggleDarkMode();
+                }
             }
             
             // Switch between tabs
@@ -1860,6 +2199,14 @@ https://vt.tiktok.com/ZSdef456/"></textarea>
                 // Update active sidebar item
                 sidebarNavItems.forEach(item => item.classList.remove('active'));
                 document.querySelector(`.sidebar-nav-item[data-tab="${tabId}"]`).classList.add('active');
+                
+                // Jika berpindah ke tab download, arahkan ke halaman download
+                if (tabId === 'download' && currentVideoData) {
+                    // Tampilkan hasil download
+                    resultSection.style.display = 'block';
+                    // Scroll ke hasil
+                    resultSection.scrollIntoView({ behavior: 'smooth' });
+                }
             }
             
             // Mobile sidebar functions
@@ -2254,6 +2601,9 @@ https://vt.tiktok.com/ZSdef456/"></textarea>
                 
                 // Show success notification
                 showNotification('success', 'Berhasil', 'Data video berhasil diambil');
+                
+                // Arahkan ke tab download
+                switchTab('download');
             }
             
             // Tampilkan opsi kualitas yang tersedia
@@ -2315,6 +2665,9 @@ https://vt.tiktok.com/ZSdef456/"></textarea>
                 
                 const downloadUrl = getDownloadUrl(selectedOption, selectedQuality);
                 if (downloadUrl) {
+                    // Tampilkan notifikasi sedang mendownload
+                    showNotification('info', 'Download', 'Sedang mendownload video...');
+                    
                     // Simulasi progress bar
                     progressBar.style.display = 'block';
                     let progress = 0;
@@ -2370,7 +2723,8 @@ https://vt.tiktok.com/ZSdef456/"></textarea>
                     case 'nowm':
                         return quality === 'hd' && currentVideoData.hd ? currentVideoData.hd : currentVideoData.nowatermark;
                     case 'audio':
-                        return currentVideoData.audio;
+                        // API untuk audio TikTok
+                        return `https://api.tiktokdownload.net/audio?url=${encodeURIComponent(urlInput.value.trim())}`;
                     case 'hd':
                         return currentVideoData.hd || currentVideoData.nowatermark;
                     case 'slideshow':
