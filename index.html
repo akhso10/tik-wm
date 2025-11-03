@@ -19,6 +19,8 @@
             --transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
             --shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
             --shadow-hover: 0 8px 25px rgba(0, 0, 0, 0.15);
+            --glass: rgba(255, 255, 255, 0.1);
+            --glass-border: rgba(255, 255, 255, 0.2);
         }
         
         * {
@@ -29,7 +31,7 @@
         }
         
         body {
-            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             color: var(--text);
             line-height: 1.6;
             overflow-x: hidden;
@@ -37,11 +39,195 @@
         }
         
         .container {
-            max-width: 900px;
+            max-width: 1100px;
             margin: 0 auto;
             padding: 20px;
             min-height: 100vh;
             position: relative;
+        }
+        
+        /* Preloader */
+        #preloader {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            transition: opacity 0.5s ease;
+        }
+        
+        #preloader.hide {
+            opacity: 0;
+            pointer-events: none;
+        }
+        
+        .loader {
+            width: 50px;
+            height: 50px;
+            border: 4px solid rgba(255, 255, 255, 0.3);
+            border-top: 4px solid var(--primary);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+        
+        /* Intro Screen */
+        #intro {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 9998;
+            transition: opacity 0.6s ease;
+            color: white;
+            text-align: center;
+            padding: 20px;
+        }
+        
+        #intro.hide {
+            opacity: 0;
+            pointer-events: none;
+        }
+        
+        .intro-content {
+            max-width: 500px;
+            animation: fadeInDown 1s ease-out;
+        }
+        
+        .intro-logo {
+            font-size: 4rem;
+            margin-bottom: 20px;
+            animation: pulse 2s infinite;
+        }
+        
+        .intro-title {
+            font-size: 2.5rem;
+            margin-bottom: 15px;
+            font-weight: bold;
+        }
+        
+        .intro-subtitle {
+            font-size: 1.2rem;
+            margin-bottom: 30px;
+            opacity: 0.9;
+        }
+        
+        .intro-features {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+            margin: 30px 0;
+        }
+        
+        .intro-feature {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 0.9rem;
+        }
+        
+        .intro-feature i {
+            color: var(--primary);
+            background: white;
+            width: 25px;
+            height: 25px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .intro-timer {
+            margin: 20px 0;
+            font-size: 1.1rem;
+        }
+        
+        .intro-buttons {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+        }
+        
+        .btn {
+            padding: 12px 25px;
+            border: none;
+            border-radius: 25px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .btn-primary {
+            background: white;
+            color: var(--primary);
+        }
+        
+        .btn-secondary {
+            background: transparent;
+            color: white;
+            border: 2px solid white;
+        }
+        
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+        
+        /* Theme Toggle */
+        .theme-toggle {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: var(--glass);
+            backdrop-filter: blur(10px);
+            border: 1px solid var(--glass-border);
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            z-index: 100;
+            transition: var(--transition);
+            color: white;
+        }
+        
+        .theme-toggle:hover {
+            transform: rotate(15deg);
+        }
+        
+        /* Toast Notification */
+        #toast {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%) translateY(100px);
+            background: rgba(0, 0, 0, 0.8);
+            color: white;
+            padding: 12px 20px;
+            border-radius: 25px;
+            font-size: 0.9rem;
+            z-index: 1000;
+            transition: transform 0.3s ease;
+            backdrop-filter: blur(10px);
+        }
+        
+        #toast.show {
+            transform: translateX(-50%) translateY(0);
         }
         
         /* Animasi halaman */
@@ -103,14 +289,16 @@
         }
         
         .subtitle {
-            color: #666;
+            color: rgba(255, 255, 255, 0.8);
             font-size: 1.2rem;
             animation: fadeIn 1s ease-out 0.3s both;
         }
         
         .card {
-            background-color: var(--light);
-            border-radius: 16px;
+            background-color: var(--glass);
+            backdrop-filter: blur(10px);
+            border: 1px solid var(--glass-border);
+            border-radius: 20px;
             box-shadow: var(--shadow);
             padding: 30px;
             margin-bottom: 30px;
@@ -118,6 +306,7 @@
             animation: slideUp 0.5s ease-out;
             position: relative;
             overflow: hidden;
+            color: white;
         }
         
         .card::before {
@@ -144,18 +333,23 @@
         .url-input {
             flex: 1;
             padding: 15px 20px;
-            border: 2px solid #e0e0e0;
+            border: 2px solid rgba(255, 255, 255, 0.2);
             border-radius: 8px 0 0 8px;
             font-size: 1rem;
             transition: var(--transition);
-            background: #f9f9f9;
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
         }
         
         .url-input:focus {
             outline: none;
             border-color: var(--primary);
             box-shadow: 0 0 0 3px rgba(254, 44, 85, 0.2);
-            background: white;
+            background: rgba(255, 255, 255, 0.15);
+        }
+        
+        .url-input::placeholder {
+            color: rgba(255, 255, 255, 0.7);
         }
         
         .download-btn {
@@ -263,7 +457,7 @@
             gap: 15px;
             margin-top: 10px;
             font-size: 0.9rem;
-            color: #666;
+            color: rgba(255, 255, 255, 0.8);
         }
         
         .video-preview {
@@ -289,8 +483,8 @@
         
         .option-btn {
             padding: 12px 25px;
-            background-color: var(--light);
-            border: 2px solid #e0e0e0;
+            background-color: rgba(255, 255, 255, 0.1);
+            border: 2px solid rgba(255, 255, 255, 0.2);
             border-radius: 8px;
             font-weight: 600;
             cursor: pointer;
@@ -300,6 +494,7 @@
             gap: 8px;
             position: relative;
             overflow: hidden;
+            color: white;
         }
         
         .option-btn::before {
@@ -319,7 +514,7 @@
         
         .option-btn:hover {
             border-color: var(--primary);
-            color: var(--primary);
+            color: white;
             transform: translateY(-3px);
         }
         
@@ -343,7 +538,7 @@
         .spinner {
             width: 40px;
             height: 40px;
-            border: 4px solid rgba(0, 0, 0, 0.1);
+            border: 4px solid rgba(255, 255, 255, 0.1);
             border-left-color: var(--primary);
             border-radius: 50%;
             animation: spin 1s linear infinite;
@@ -353,7 +548,7 @@
         .progress-bar {
             width: 100%;
             height: 6px;
-            background-color: #e0e0e0;
+            background-color: rgba(255, 255, 255, 0.2);
             border-radius: 3px;
             margin: 15px 0;
             overflow: hidden;
@@ -369,24 +564,26 @@
         
         .error {
             display: none;
-            background-color: #ffe6e6;
-            color: var(--danger);
+            background-color: rgba(214, 48, 49, 0.2);
+            color: white;
             padding: 15px;
             border-radius: 8px;
             margin-top: 20px;
             text-align: center;
             animation: shake 0.5s ease-in-out;
+            border-left: 4px solid var(--danger);
         }
         
         .success {
             display: none;
-            background-color: #e6fffa;
-            color: var(--success);
+            background-color: rgba(0, 184, 148, 0.2);
+            color: white;
             padding: 15px;
             border-radius: 8px;
             margin-top: 20px;
             text-align: center;
             animation: bounceIn 0.5s ease-out;
+            border-left: 4px solid var(--success);
         }
         
         .instructions {
@@ -436,12 +633,15 @@
         }
         
         .feature {
-            background: white;
+            background: var(--glass);
+            backdrop-filter: blur(10px);
+            border: 1px solid var(--glass-border);
             padding: 20px;
-            border-radius: 8px;
+            border-radius: 12px;
             box-shadow: var(--shadow);
             text-align: center;
             transition: var(--transition);
+            color: white;
         }
         
         .feature:hover {
@@ -459,7 +659,7 @@
             text-align: center;
             margin-top: 50px;
             padding: 20px;
-            color: #666;
+            color: rgba(255, 255, 255, 0.7);
             font-size: 0.9rem;
             animation: fadeIn 1s ease-out 0.7s both;
         }
@@ -496,6 +696,10 @@
             border-left: 4px solid var(--warning);
         }
         
+        .notification.info {
+            border-left: 4px solid var(--secondary);
+        }
+        
         .particles {
             position: fixed;
             top: 0;
@@ -520,13 +724,16 @@
         }
         
         .result-card {
-            background: white;
+            background: var(--glass);
+            backdrop-filter: blur(10px);
+            border: 1px solid var(--glass-border);
             border-radius: 20px;
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
             padding: 30px;
             margin: 20px auto;
             max-width: 600px;
             animation: slideUp 0.5s ease-out;
+            color: white;
         }
         
         .success-animation {
@@ -614,9 +821,9 @@
         }
         
         .action-btn.secondary {
-            background: white;
-            color: var(--text);
-            border: 2px solid #e0e0e0;
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            border: 2px solid rgba(255, 255, 255, 0.2);
         }
         
         .action-btn:hover {
@@ -646,6 +853,89 @@
         .back-link:hover {
             color: var(--secondary);
             transform: translateX(-5px);
+        }
+        
+        /* Fitur Baru */
+        .quality-selector {
+            margin: 20px 0;
+            text-align: center;
+        }
+        
+        .quality-buttons {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-top: 10px;
+        }
+        
+        .quality-btn {
+            padding: 8px 15px;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 20px;
+            color: white;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+        
+        .quality-btn.active {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            border-color: transparent;
+        }
+        
+        .quality-btn:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+        
+        .quality-btn.active:hover {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+        }
+        
+        .history-section {
+            margin-top: 40px;
+        }
+        
+        .history-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 15px;
+            margin-top: 20px;
+        }
+        
+        .history-item {
+            background: var(--glass);
+            backdrop-filter: blur(10px);
+            border: 1px solid var(--glass-border);
+            border-radius: 12px;
+            padding: 15px;
+            text-align: center;
+            transition: var(--transition);
+            cursor: pointer;
+            color: white;
+        }
+        
+        .history-item:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-hover);
+        }
+        
+        .history-thumbnail {
+            width: 100%;
+            height: 120px;
+            object-fit: cover;
+            border-radius: 8px;
+            margin-bottom: 10px;
+        }
+        
+        .history-author {
+            font-size: 0.9rem;
+            color: rgba(255, 255, 255, 0.8);
+        }
+        
+        .clear-history {
+            margin-top: 20px;
+            text-align: center;
         }
         
         /* Animasi Kustom */
@@ -783,10 +1073,80 @@
                 max-width: 300px;
                 justify-content: center;
             }
+            
+            .quality-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .history-list {
+                grid-template-columns: 1fr;
+            }
+            
+            .intro-features {
+                grid-template-columns: 1fr;
+            }
+            
+            .intro-buttons {
+                flex-direction: column;
+            }
         }
     </style>
 </head>
 <body>
+    <!-- Preloader -->
+    <div id="preloader">
+        <div class="loader"></div>
+    </div>
+
+    <!-- Intro Screen -->
+    <div id="intro">
+        <div class="intro-content">
+            <div class="intro-logo">
+                <i class="fab fa-tiktok"></i>
+            </div>
+            <h1 class="intro-title">TikTok Downloader</h1>
+            <p class="intro-subtitle">Unduh video TikTok tanpa watermark dengan mudah dan cepat</p>
+            
+            <div class="intro-features">
+                <div class="intro-feature">
+                    <i class="fas fa-bolt"></i>
+                    <span>Cepat & Mudah</span>
+                </div>
+                <div class="intro-feature">
+                    <i class="fas fa-water"></i>
+                    <span>Tanpa Watermark</span>
+                </div>
+                <div class="intro-feature">
+                    <i class="fas fa-mobile-alt"></i>
+                    <span>Responsif</span>
+                </div>
+                <div class="intro-feature">
+                    <i class="fas fa-shield-alt"></i>
+                    <span>Aman & Privat</span>
+                </div>
+            </div>
+            
+            <div class="intro-timer">
+                Halaman akan terbuka dalam <span id="countdown">15</span> detik
+            </div>
+            
+            <div class="intro-buttons">
+                <button class="btn btn-primary" id="enterBtn">
+                    <i class="fas fa-play"></i> Mulai Sekarang
+                </button>
+                <button class="btn btn-secondary" onclick="showMoreInfo()">
+                    <i class="fas fa-info-circle"></i> Info Lebih Lanjut
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Theme Toggle -->
+    <div class="theme-toggle" id="themeToggle">
+        <i class="fas fa-moon"></i>
+    </div>
+
     <!-- Background Particles -->
     <div class="particles" id="particles"></div>
     
@@ -825,6 +1185,27 @@
                     
                     <div class="error" id="error">
                         <p id="errorMessage">Terjadi kesalahan saat memproses video</p>
+                    </div>
+
+                    <!-- Result Section -->
+                    <div class="result" id="result">
+                        <div class="video-info">
+                            <img id="thumb" src="" alt="Thumbnail" class="thumbnail">
+                            <div class="video-details">
+                                <h3 id="title">Judul Video</h3>
+                                <div class="download-options">
+                                    <a href="#" class="option-btn primary" id="hd">
+                                        <i class="fas fa-download"></i> HD Video
+                                    </a>
+                                    <a href="#" class="option-btn" id="sd">
+                                        <i class="fas fa-download"></i> SD Video
+                                    </a>
+                                    <a href="#" class="option-btn" id="mp3">
+                                        <i class="fas fa-music"></i> Audio MP3
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
                 
@@ -879,468 +1260,220 @@
                         <p>Data Anda tidak disimpan di server kami</p>
                     </div>
                 </div>
+                
+                <!-- Fitur Baru: Riwayat Download -->
+                <div class="history-section">
+                    <h2>Riwayat Download</h2>
+                    <div class="history-list" id="historyList">
+                        <!-- Item riwayat akan ditambahkan secara dinamis -->
+                    </div>
+                    <div class="clear-history">
+                        <button class="option-btn" id="clearHistoryBtn">
+                            <i class="fas fa-trash"></i> Hapus Riwayat
+                        </button>
+                    </div>
+                </div>
             </main>
             
             <footer>
-                <p>TikTok Downloader &copy; 2023 - Unduh video TikTok tanpa watermark</p>
-                <p>Disclaimer: Alat ini hanya untuk penggunaan pribadi. Harap hormati hak cipta.</p>
-            </footer>
-        </div>
-        
-        <!-- Halaman Hasil -->
-        <div class="page result-page" id="page-result">
-            <header>
-                <div class="logo">
-                    <div class="logo-icon">
-                        <i class="fab fa-tiktok"></i>
-                    </div>
-                    <h1>Download Berhasil!</h1>
-                </div>
-                <p class="subtitle">Video TikTok Anda siap diunduh tanpa watermark</p>
-            </header>
-            
-            <div class="result-card">
-                <div class="success-animation">
-                    <i class="fas fa-check-circle"></i>
-                </div>
-                
-                <h2>Video Siap Diunduh!</h2>
-                <p>Video TikTok telah berhasil diproses dan siap untuk diunduh tanpa watermark.</p>
-                
-                <div class="video-info">
-                    <div class="video-author">
-                        <img src="" alt="Avatar" class="author-avatar" id="resultAuthorAvatar">
-                        <div>
-                            <div class="author-name" id="resultAuthorName">Username</div>
-                            <div id="resultVideoDescription">Video description</div>
-                        </div>
-                    </div>
-                    <div class="video-stats">
-                        <div id="resultLikeCount">0 Likes</div>
-                        <div id="resultCommentCount">0 Comments</div>
-                        <div id="resultShareCount">0 Shares</div>
-                    </div>
-                </div>
-                
-                <div class="video-container">
-                    <video controls class="video-preview" id="videoPreview"></video>
-                    <div class="video-overlay">
-                        <div class="play-btn">
-                            <i class="fas fa-play"></i>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="action-buttons">
-                    <button class="action-btn primary" id="downloadVideoBtn">
-                        <i class="fas fa-download"></i>
-                        Unduh Video
-                    </button>
-                    <button class="action-btn secondary" id="downloadAudioBtn">
-                        <i class="fas fa-music"></i>
-                        Unduh Audio
-                    </button>
-                    <button class="action-btn secondary" id="shareVideoBtn">
-                        <i class="fas fa-share-alt"></i>
-                        Bagikan
-                    </button>
-                </div>
-                
-                <div class="back-home">
-                    <a href="#" class="back-link" id="backHomeBtn">
-                        <i class="fas fa-arrow-left"></i>
-                        Kembali ke Halaman Utama
-                    </a>
-                </div>
-            </div>
-            
-            <footer>
-                <p>TikTok Downloader &copy; 2023 - Unduh video TikTok tanpa watermark</p>
+                <p>TikTok Downloader &copy; <span id="year">2023</span> - Unduh video TikTok tanpa watermark</p>
                 <p>Disclaimer: Alat ini hanya untuk penggunaan pribadi. Harap hormati hak cipta.</p>
             </footer>
         </div>
     </div>
 
-    <!-- Notification -->
-    <div class="notification" id="notification">
-        <i class="fas fa-check-circle"></i>
-        <span id="notificationMessage">Pesan notifikasi</span>
-    </div>
+    <!-- Toast Notification -->
+    <div id="toast"></div>
 
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            // Elemen DOM
-            const urlInput = document.getElementById('urlInput');
-            const downloadBtn = document.getElementById('downloadBtn');
+        // Preloader
+        window.addEventListener('load', () => {
+            setTimeout(() => document.getElementById('preloader').classList.add('hide'), 500);
+        });
+
+        // Intro Screen
+        const intro = document.getElementById('intro');
+        const enterBtn = document.getElementById('enterBtn');
+        const countdownEl = document.getElementById('countdown');
+        let countdown = 15;
+        let introTimer;
+
+        function closeIntro() {
+            intro.classList.add('hide');
+            setTimeout(() => intro.style.display = 'none', 600);
+        }
+
+        enterBtn.addEventListener('click', () => {
+            clearInterval(introTimer);
+            closeIntro();
+        });
+
+        function showMoreInfo() {
+            showToast("Tempel link TikTok lalu klik Download untuk melihat opsi unduhan.");
+        }
+
+        introTimer = setInterval(() => {
+            countdown--;
+            if (countdown <= 0) {
+                clearInterval(introTimer);
+                closeIntro();
+            }
+            countdownEl.textContent = countdown;
+        }, 1000);
+
+        // Theme Toggle
+        const themeToggle = document.getElementById('themeToggle');
+        themeToggle.addEventListener('click', () => {
+            document.body.classList.toggle('light');
+            const icon = themeToggle.querySelector('i');
+            icon.classList.toggle('fa-moon');
+            icon.classList.toggle('fa-sun');
+        });
+
+        // Set current year
+        document.getElementById('year').textContent = new Date().getFullYear();
+
+        // Toast Notification
+        const toastEl = document.getElementById('toast');
+        let toastTimeout;
+        function showToast(msg) {
+            clearTimeout(toastTimeout);
+            toastEl.textContent = msg;
+            toastEl.classList.add('show');
+            toastTimeout = setTimeout(() => toastEl.classList.remove('show'), 3200);
+        }
+
+        // History Management
+        function loadHistory() {
+            const list = document.getElementById('historyList');
+            const items = JSON.parse(localStorage.getItem('downloadHistory') || '[]');
+            if (!items.length) {
+                list.innerHTML = '<div style="opacity:0.8; text-align:center; grid-column:1/-1; color:rgba(255,255,255,0.7)">Belum ada riwayat unduhan.</div>';
+                return;
+            }
+            list.innerHTML = items.map(i => `
+                <div class="history-item" title="${escapeHtml(i.title)}">
+                    <img src="${escapeHtml(i.thumb)}" alt="" class="history-thumbnail">
+                    <div class="history-author">${escapeHtml(i.title)}</div>
+                </div>
+            `).join('');
+        }
+
+        function saveToHistory(title, thumb) {
+            const items = JSON.parse(localStorage.getItem('downloadHistory') || '[]');
+            items.unshift({ title, thumb });
+            localStorage.setItem('downloadHistory', JSON.stringify(items.slice(0, 6)));
+            loadHistory();
+        }
+
+        function escapeHtml(s) {
+            return String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+        }
+
+        loadHistory();
+
+        // Download Function
+        async function dl() {
+            const url = document.getElementById('urlInput').value.trim();
+            if (!url) return showToast('Masukkan link TikTok terlebih dahulu!');
+
+            const btn = document.getElementById('downloadBtn');
             const loading = document.getElementById('loading');
-            const error = document.getElementById('error');
-            const errorMessage = document.getElementById('errorMessage');
-            const downloadProgress = document.getElementById('downloadProgress');
-            const notification = document.getElementById('notification');
-            const notificationMessage = document.getElementById('notificationMessage');
-            
-            // Halaman
-            const pageMain = document.getElementById('page-main');
-            const pageResult = document.getElementById('page-result');
-            const backHomeBtn = document.getElementById('backHomeBtn');
-            
-            // Elemen Halaman Hasil
-            const videoPreview = document.getElementById('videoPreview');
-            const resultAuthorAvatar = document.getElementById('resultAuthorAvatar');
-            const resultAuthorName = document.getElementById('resultAuthorName');
-            const resultVideoDescription = document.getElementById('resultVideoDescription');
-            const resultLikeCount = document.getElementById('resultLikeCount');
-            const resultCommentCount = document.getElementById('resultCommentCount');
-            const resultShareCount = document.getElementById('resultShareCount');
-            const downloadVideoBtn = document.getElementById('downloadVideoBtn');
-            const downloadAudioBtn = document.getElementById('downloadAudioBtn');
-            const shareVideoBtn = document.getElementById('shareVideoBtn');
-            
-            // Data state
-            let currentVideoData = null;
-            
-            // Inisialisasi partikel background
-            initParticles();
-            
-            // Contoh URL TikTok untuk demo
-            const exampleUrls = [
-                "https://www.tiktok.com/@tiktok/video/1234567890123456789",
-                "https://www.tiktok.com/@creator/video/9876543210987654321",
-                "https://vm.tiktok.com/ZMexample123/"
-            ];
-            
-            // Set placeholder dengan contoh URL yang berubah-ubah
-            let urlIndex = 0;
-            setInterval(() => {
-                urlInput.placeholder = exampleUrls[urlIndex];
-                urlIndex = (urlIndex + 1) % exampleUrls.length;
-            }, 2000);
-            
-            // Event listener untuk tombol download
-            downloadBtn.addEventListener('click', processDownload);
-            urlInput.addEventListener('keypress', function(e) {
-                if (e.key === 'Enter') {
-                    processDownload();
-                }
-            });
-            
-            // Event listener untuk tombol kembali
-            backHomeBtn.addEventListener('click', function(e) {
-                e.preventDefault();
-                switchPage(pageMain);
-                // Reset form
-                urlInput.value = '';
-                hideError();
-            });
-            
-            // Event listener untuk tombol download video
-            downloadVideoBtn.addEventListener('click', function() {
-                if (currentVideoData) {
-                    downloadFile(currentVideoData.videoUrl, 'tiktok-video.mp4', 'video');
-                } else {
-                    showError('Tidak ada video yang tersedia untuk diunduh');
-                }
-            });
-            
-            // Event listener untuk tombol download audio
-            downloadAudioBtn.addEventListener('click', function() {
-                if (currentVideoData) {
-                    showNotification('Fitur download audio akan mengekstrak audio dari video', 'info');
-                } else {
-                    showError('Tidak ada video yang tersedia untuk diunduh');
-                }
-            });
-            
-            // Event listener untuk tombol share
-            shareVideoBtn.addEventListener('click', shareVideo);
-            
-            // Fungsi untuk memproses download
-            async function processDownload() {
-                const url = urlInput.value.trim();
-                
-                if (!url) {
-                    showError('Silakan masukkan URL video TikTok');
-                    return;
-                }
-                
-                // Validasi URL TikTok sederhana
-                if (!isValidTikTokUrl(url)) {
-                    showError('URL TikTok tidak valid. Pastikan URL berasal dari TikTok.');
-                    return;
-                }
-                
-                // Tampilkan loading
-                showLoading();
-                hideError();
-                downloadBtn.disabled = true;
-                
-                try {
-                    // Simulasi progres download
-                    simulateProgress();
-                    
-                    // Ambil data video dari API TikTok
-                    const videoData = await fetchVideoData(url);
-                    
-                    // Simpan data video untuk digunakan nanti
-                    currentVideoData = videoData;
-                    
-                    // Tampilkan hasil di halaman baru
-                    displayVideoData(videoData);
-                    switchPage(pageResult);
-                    
-                } catch (err) {
-                    console.error('Error:', err);
-                    showError('Gagal memproses video. Pastikan URL valid dan coba lagi.');
-                } finally {
-                    // Sembunyikan loading
-                    hideLoading();
-                    downloadBtn.disabled = false;
-                }
-            }
-            
-            // Fungsi untuk mengambil data video dari API TikTok
-            async function fetchVideoData(url) {
-                // Menggunakan API TikTokDownloader yang real
-                // API ini akan mengambil data video TikTok tanpa watermark
-                const apiUrl = `https://api.tiktokdownload.me/video?url=${encodeURIComponent(url)}`;
-                
-                try {
-                    const response = await fetch(apiUrl, {
-                        method: 'GET',
-                        headers: {
-                            'Content-Type': 'application/json',
-                        }
-                    });
-                    
-                    if (!response.ok) {
-                        throw new Error('Gagal mengambil data video');
-                    }
-                    
-                    const data = await response.json();
-                    
-                    // Format data sesuai dengan kebutuhan aplikasi
-                    return {
-                        success: true,
-                        videoUrl: data.video_url,
-                        thumbnail: data.thumbnail,
-                        author: {
-                            name: data.author_name,
-                            avatar: data.author_avatar
-                        },
-                        description: data.description,
-                        stats: {
-                            likes: data.likes_count,
-                            comments: data.comments_count,
-                            shares: data.shares_count
-                        }
-                    };
-                    
-                } catch (error) {
-                    // Fallback ke API alternatif jika yang pertama gagal
-                    return await fetchVideoDataFallback(url);
-                }
-            }
-            
-            // Fallback API jika API utama gagal
-            async function fetchVideoDataFallback(url) {
-                // API alternatif untuk mengambil data TikTok
-                const apiUrl = `https://www.tikwm.com/api/?url=${encodeURIComponent(url)}`;
-                
-                try {
-                    const response = await fetch(apiUrl);
-                    
-                    if (!response.ok) {
-                        throw new Error('Gagal mengambil data video');
-                    }
-                    
-                    const data = await response.json();
-                    
-                    // Format data sesuai dengan kebutuhan aplikasi
-                    return {
-                        success: true,
-                        videoUrl: data.data.play,
-                        thumbnail: data.data.cover,
-                        author: {
-                            name: data.data.author.unique_id,
-                            avatar: data.data.author.avatar
-                        },
-                        description: data.data.title,
-                        stats: {
-                            likes: data.data.digg_count,
-                            comments: data.data.comment_count,
-                            shares: data.data.share_count
-                        }
-                    };
-                    
-                } catch (error) {
-                    // Jika semua API gagal, gunakan data simulasi
-                    console.error('Semua API gagal, menggunakan data simulasi');
-                    return await fetchVideoDataMock(url);
-                }
-            }
-            
-            // Data simulasi jika API real gagal
-            async function fetchVideoDataMock(url) {
-                // Simulasi delay API
-                await new Promise(resolve => setTimeout(resolve, 2000));
-                
-                // Simulasi data respons
-                const mockVideoData = {
-                    success: true,
-                    videoUrl: "https://storage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4",
-                    thumbnail: "https://placehold.co/100x100/25f4ee/white?text=Avatar",
-                    author: {
-                        name: "tiktokuser",
-                        avatar: "https://placehold.co/100x100/25f4ee/white?text=Avatar"
-                    },
-                    description: "Video TikTok yang menarik dan menghibur #fyp #viral",
-                    stats: {
-                        likes: "125K",
-                        comments: "2.5K",
-                        shares: "1.8K"
-                    }
-                };
-                
-                // Simulasi error untuk URL tertentu
-                if (url.includes('error')) {
-                    throw new Error('Video tidak ditemukan atau tidak dapat diakses');
-                }
-                
-                return mockVideoData;
-            }
-            
-            // Fungsi untuk menampilkan data video
-            function displayVideoData(data) {
-                videoPreview.src = data.videoUrl;
-                resultAuthorAvatar.src = data.author.avatar;
-                resultAuthorName.textContent = `@${data.author.name}`;
-                resultVideoDescription.textContent = data.description;
-                resultLikeCount.textContent = `${data.stats.likes} Likes`;
-                resultCommentCount.textContent = `${data.stats.comments} Comments`;
-                resultShareCount.textContent = `${data.stats.shares} Shares`;
-            }
-            
-            // Fungsi untuk validasi URL TikTok
-            function isValidTikTokUrl(url) {
-                const tiktokPattern = /(https?:\/\/)?(www\.)?(tiktok\.com|vm\.tiktok\.com)\/.+/;
-                return tiktokPattern.test(url);
-            }
-            
-            // Fungsi untuk mengunduh file
-            function downloadFile(url, filename, type) {
-                showNotification('Mengunduh video...', 'info');
-                
-                // Membuat link download
-                const a = document.createElement('a');
-                a.href = url;
-                a.download = filename;
-                document.body.appendChild(a);
-                a.click();
-                document.body.removeChild(a);
-                
-                // Tampilkan notifikasi sukses
-                setTimeout(() => {
-                    showNotification('Video berhasil diunduh!', 'success');
-                }, 1000);
-            }
-            
-            // Fungsi untuk simulasi progres
-            function simulateProgress() {
-                let progress = 0;
-                const interval = setInterval(() => {
-                    progress += Math.random() * 15;
-                    if (progress >= 90) {
-                        clearInterval(interval);
-                    }
-                    downloadProgress.style.width = `${progress}%`;
-                }, 300);
-            }
-            
-            // Fungsi untuk beralih halaman
-            function switchPage(targetPage) {
-                // Sembunyikan semua halaman
-                document.querySelectorAll('.page').forEach(page => {
-                    page.classList.remove('active');
-                });
-                
-                // Tampilkan halaman target
-                targetPage.classList.add('active');
-                
-                // Scroll ke atas
-                window.scrollTo(0, 0);
-            }
-            
-            // Fungsi untuk berbagi video
-            function shareVideo() {
-                if (navigator.share) {
-                    navigator.share({
-                        title: 'Video TikTok',
-                        text: currentVideoData ? currentVideoData.description : 'Video TikTok menarik',
-                        url: currentVideoData ? currentVideoData.videoUrl : window.location.href
-                    })
-                    .then(() => showNotification('Berhasil membagikan video', 'success'))
-                    .catch(error => showNotification('Gagal membagikan video', 'error'));
-                } else {
-                    showNotification('Fitur berbagi tidak didukung di browser ini', 'warning');
-                }
-            }
-            
-            // Fungsi untuk menampilkan notifikasi
-            function showNotification(message, type = 'info') {
-                notificationMessage.textContent = message;
-                notification.className = `notification ${type} show`;
-                
-                setTimeout(() => {
-                    notification.classList.remove('show');
-                }, 3000);
-            }
-            
-            // Fungsi untuk inisialisasi partikel background
-            function initParticles() {
-                const particlesContainer = document.getElementById('particles');
-                const particleCount = 30;
-                
-                for (let i = 0; i < particleCount; i++) {
-                    const particle = document.createElement('div');
-                    particle.className = 'particle';
-                    
-                    // Ukuran acak
-                    const size = Math.random() * 20 + 5;
-                    particle.style.width = `${size}px`;
-                    particle.style.height = `${size}px`;
-                    
-                    // Posisi acak
-                    particle.style.left = `${Math.random() * 100}%`;
-                    particle.style.top = `${Math.random() * 100}%`;
-                    
-                    // Animasi dengan durasi acak
-                    particle.style.animationDuration = `${Math.random() * 20 + 10}s`;
-                    particle.style.animationDelay = `${Math.random() * 5}s`;
-                    
-                    particlesContainer.appendChild(particle);
-                }
-            }
-            
-            // Fungsi bantuan untuk menampilkan/menyembunyikan elemen
-            function showLoading() {
-                loading.style.display = 'block';
-            }
-            
-            function hideLoading() {
+            const result = document.getElementById('result');
+
+            btn.disabled = true;
+            loading.style.display = 'block';
+            result.style.display = 'none';
+
+            try {
+                const api = `https://api.nvidiabotz.xyz/download/tiktok?url=${encodeURIComponent(url)}`;
+                const res = await fetch(api);
+                const json = await res.json();
+
+                if (!json.status) throw new Error(json.message || 'Gagal mengambil data.');
+
+                const { video_hd, video_sd, mp3, thumbnail, title } = json.result;
+
+                // Set result elements
+                document.getElementById('thumb').src = thumbnail;
+                document.getElementById('title').textContent = title;
+                document.getElementById('hd').href = video_hd;
+                document.getElementById('sd').href = video_sd;
+                document.getElementById('mp3').href = mp3;
+
+                result.style.display = 'block';
+                saveToHistory(title, thumbnail);
+                showToast('Video berhasil diproses, silakan pilih format unduhan.');
+            } catch (e) {
+                showToast(e.message || 'Server error.');
+            } finally {
+                btn.disabled = false;
                 loading.style.display = 'none';
-                downloadProgress.style.width = '0%';
             }
-            
-            function showError(message) {
-                errorMessage.textContent = message;
-                error.style.display = 'block';
-                error.scrollIntoView({ behavior: 'smooth' });
-            }
-            
-            function hideError() {
-                error.style.display = 'none';
+        }
+
+        // Event Listeners
+        document.getElementById('downloadBtn').addEventListener('click', dl);
+        document.getElementById('urlInput').addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') dl();
+        });
+
+        document.addEventListener('keydown', e => {
+            if (e.key === 'Escape' && !intro.classList.contains('hide')) {
+                clearInterval(introTimer);
+                closeIntro();
             }
         });
+
+        // Clear History
+        document.getElementById('clearHistoryBtn').addEventListener('click', function() {
+            if (confirm('Apakah Anda yakin ingin menghapus semua riwayat download?')) {
+                localStorage.removeItem('downloadHistory');
+                loadHistory();
+                showToast('Riwayat berhasil dihapus');
+            }
+        });
+
+        // Particles Background
+        function initParticles() {
+            const particlesContainer = document.getElementById('particles');
+            const particleCount = 30;
+
+            for (let i = 0; i < particleCount; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'particle';
+
+                // Random size
+                const size = Math.random() * 20 + 5;
+                particle.style.width = `${size}px`;
+                particle.style.height = `${size}px`;
+
+                // Random position
+                particle.style.left = `${Math.random() * 100}%`;
+                particle.style.top = `${Math.random() * 100}%`;
+
+                // Random animation duration
+                particle.style.animationDuration = `${Math.random() * 20 + 10}s`;
+                particle.style.animationDelay = `${Math.random() * 5}s`;
+
+                particlesContainer.appendChild(particle);
+            }
+        }
+
+        initParticles();
+
+        // Example URLs for placeholder
+        const exampleUrls = [
+            "https://www.tiktok.com/@tiktok/video/1234567890123456789",
+            "https://www.tiktok.com/@creator/video/9876543210987654321",
+            "https://vm.tiktok.com/ZMexample123/"
+        ];
+
+        let urlIndex = 0;
+        setInterval(() => {
+            document.getElementById('urlInput').placeholder = exampleUrls[urlIndex];
+            urlIndex = (urlIndex + 1) % exampleUrls.length;
+        }, 2000);
     </script>
 </body>
 </html>
